@@ -1,0 +1,80 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+\\Mac\Home\Documents\project\alice\code\board1\alice1.uvproj
+Project File Date:  04/19/2016
+
+<h2>Output:</h2>
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+mp3.h(93): warning C206: 'delay_ms': missing function-prototype
+mp3.h(93): error C267: 'delay_ms': requires ANSI-style prototype
+Target not created
+Build target 'Target 1'
+compiling main.c...
+mp3.h(93): warning C206: 'delay_ms': missing function-prototype
+mp3.h(93): error C267: 'delay_ms': requires ANSI-style prototype
+Target not created
+Build target 'Target 1'
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?UART_INIT?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=10.0 xdata=0 code=104
+creating hex file from "alice1"...
+"alice1" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+main.c(13): error C132: 'interrupte': not in formal parameter list
+main.c(13): error C141: syntax error near '1'
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?UART_INIT?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=11.0 xdata=0 code=290
+creating hex file from "alice1"...
+"alice1" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?UART_INIT?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=11.0 xdata=0 code=290
+creating hex file from "alice1"...
+"alice1" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?UART_INIT?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=11.0 xdata=0 code=290
+creating hex file from "alice1"...
+"alice1" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?UART_INIT?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=11.0 xdata=0 code=348
+creating hex file from "alice1"...
+"alice1" - 0 Error(s), 2 Warning(s).
