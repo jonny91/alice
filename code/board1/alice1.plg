@@ -3,68 +3,76 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
-\\Mac\Home\Documents\project\alice\code\board1\alice1.uvproj
-Project File Date:  04/19/2016
+E:\alice\code\board1\alice1.uvproj
+Project File Date:  04/26/2016
 
 <h2>Output:</h2>
 Build target 'Target 1'
 assembling STARTUP.A51...
 compiling main.c...
-mp3.h(93): warning C206: 'delay_ms': missing function-prototype
-mp3.h(93): error C267: 'delay_ms': requires ANSI-style prototype
+main.c(1): warning C318: can't open file 'STC12C5A60S2.H'
+main.c(2): warning C315: unknown #directive 'inlcude'
+UART.H(14): error C202: 'EA': undefined identifier
+UART.H(15): error C202: 'TMOD': undefined identifier
+UART.H(24): error C202: 'TH1': undefined identifier
+UART.H(26): error C202: 'TR1': undefined identifier
+UART.H(28): error C202: 'SM0': undefined identifier
+UART.H(29): error C202: 'SM1': undefined identifier
+UART.H(30): error C202: 'EA': undefined identifier
+UART.H(39): error C202: 'ES': undefined identifier
+UART.H(40): error C202: 'TI': undefined identifier
+UART.H(41): error C202: 'SBUF': undefined identifier
+UART.H(42): error C202: 'TI': undefined identifier
+UART.H(43): error C202: 'TI': undefined identifier
+UART.H(44): error C202: 'ES': undefined identifier
+UART.H(67): error C202: 'ES': undefined identifier
+UART.H(68): error C202: 'RI': undefined identifier
+UART.H(69): error C202: 'SBUF': undefined identifier
+UART.H(70): error C202: 'ES': undefined identifier
+MAIN.C(5): error C202: 'P0': undefined identifier
+MAIN.C(6): error C202: 'P0': undefined identifier
+MAIN.C(14): error C202: 'TMOD': undefined identifier
+MAIN.C(15): error C202: 'EA': undefined identifier
+MAIN.C(16): error C202: 'ET0': undefined identifier
+MAIN.C(17): error C202: 'TH0': undefined identifier
+MAIN.C(18): error C202: 'TL0': undefined identifier
+MAIN.C(23): error C202: 'TH0': undefined identifier
+MAIN.C(24): error C202: 'TL0': undefined identifier
+MAIN.C(29): error C202: 'STEP_1_SIGNAL': undefined identifier
+MAIN.C(36): error C202: 'STEP_2_SIGNAL': undefined identifier
 Target not created
 Build target 'Target 1'
+assembling STARTUP.A51...
 compiling main.c...
-mp3.h(93): warning C206: 'delay_ms': missing function-prototype
-mp3.h(93): error C267: 'delay_ms': requires ANSI-style prototype
-Target not created
-Build target 'Target 1'
-compiling main.c...
+main.c(2): warning C315: unknown #directive 'inlcude'
 linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?UART_INIT?MAIN
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_SENDC?MAIN
-Program Size: data=10.0 xdata=0 code=104
+Program Size: data=11.0 xdata=0 code=348
 creating hex file from "alice1"...
-"alice1" - 0 Error(s), 2 Warning(s).
+"alice1" - 0 Error(s), 3 Warning(s).
 Build target 'Target 1'
 assembling STARTUP.A51...
 compiling main.c...
-main.c(13): error C132: 'interrupte': not in formal parameter list
-main.c(13): error C141: syntax error near '1'
-Target not created
-Build target 'Target 1'
-assembling STARTUP.A51...
-compiling main.c...
+main.c(2): warning C315: unknown #directive 'incLude'
 linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?UART_INIT?MAIN
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_SENDC?MAIN
-Program Size: data=11.0 xdata=0 code=290
+Program Size: data=11.0 xdata=0 code=348
 creating hex file from "alice1"...
-"alice1" - 0 Error(s), 2 Warning(s).
+"alice1" - 0 Error(s), 3 Warning(s).
 Build target 'Target 1'
-assembling STARTUP.A51...
 compiling main.c...
 linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?UART_INIT?MAIN
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_SENDC?MAIN
-Program Size: data=11.0 xdata=0 code=290
-creating hex file from "alice1"...
-"alice1" - 0 Error(s), 2 Warning(s).
-Build target 'Target 1'
-assembling STARTUP.A51...
-compiling main.c...
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?UART_INIT?MAIN
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_SENDC?MAIN
-Program Size: data=11.0 xdata=0 code=290
+Program Size: data=11.0 xdata=0 code=348
 creating hex file from "alice1"...
 "alice1" - 0 Error(s), 2 Warning(s).
 Build target 'Target 1'
@@ -78,3 +86,168 @@ linking...
 Program Size: data=11.0 xdata=0 code=348
 creating hex file from "alice1"...
 "alice1" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+common.h(1): warning C318: can't open file 'STC/STC12C5A60S2'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?UART_INIT?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=11.0 xdata=0 code=348
+creating hex file from "alice1"...
+"alice1" - 0 Error(s), 3 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+common.h(1): warning C318: can't open file 'STC/STC12C5A60S2'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?UART_INIT?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=11.0 xdata=0 code=348
+creating hex file from "alice1"...
+"alice1" - 0 Error(s), 3 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?UART_INIT?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=11.0 xdata=0 code=348
+creating hex file from "alice1"...
+"alice1" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?UART_INIT?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=11.0 xdata=0 code=348
+creating hex file from "alice1"...
+"alice1" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SYS_INIT?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?UART_INIT?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=11.0 xdata=0 code=349
+creating hex file from "alice1"...
+"alice1" - 0 Error(s), 3 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?UART_INIT?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=11.0 xdata=0 code=348
+creating hex file from "alice1"...
+"alice1" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+COMMON.H(31): error C202: 'OUT1': undefined identifier
+COMMON.H(32): error C202: 'OUT2': undefined identifier
+COMMON.H(33): error C202: 'OUT3': undefined identifier
+COMMON.H(34): error C202: 'OUT4': undefined identifier
+COMMON.H(35): error C202: 'OUT5': undefined identifier
+COMMON.H(38): error C202: 'OUT6': undefined identifier
+COMMON.H(39): error C202: 'OUT7': undefined identifier
+COMMON.H(40): error C202: 'OUT8': undefined identifier
+COMMON.H(41): error C202: 'OUT9': undefined identifier
+COMMON.H(42): error C202: 'OUT10': undefined identifier
+COMMON.H(45): error C202: 'M10': undefined identifier
+COMMON.H(46): error C202: 'INPUT16': undefined identifier
+COMMON.H(48): error C202: 'INPUT15': undefined identifier
+COMMON.H(49): error C202: 'INPUT14': undefined identifier
+COMMON.H(50): error C202: 'INPUT13': undefined identifier
+COMMON.H(52): error C202: 'INPUT11': undefined identifier
+COMMON.H(53): error C202: 'INPUT12': undefined identifier
+COMMON.H(55): error C202: 'INPUT10': undefined identifier
+COMMON.H(56): error C202: 'INPUT9': undefined identifier
+COMMON.H(57): error C202: 'INPUT8': undefined identifier
+COMMON.H(58): error C202: 'INPUT7': undefined identifier
+COMMON.H(59): error C202: 'INPUT6': undefined identifier
+COMMON.H(60): error C202: 'INPUT5': undefined identifier
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+COMMON.H(29): warning C206: 'uart_init': missing function-prototype
+COMMON.H(30): warning C206: 'mp3_init': missing function-prototype
+UART.H(13): error C231: 'uart_init': redefinition
+UART.H(31): error C231: 'uart_init': redefinition
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+COMMON.H(31): warning C206: 'mp3_init': missing function-prototype
+UART.H(31): error C237: 'uart_init': function already has a body
+UART.H(46): error C237: '_send': function already has a body
+UART.H(59): error C237: '_sendc': function already has a body
+UART.H(71): error C237: 'uart': function already has a body
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+UART.H(31): error C237: 'uart_init': function already has a body
+UART.H(46): error C237: '_send': function already has a body
+UART.H(59): error C237: '_sendc': function already has a body
+UART.H(71): error C237: 'uart': function already has a body
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SYS_INIT?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_MS?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?UART_INIT?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=11.0 xdata=0 code=413
+creating hex file from "alice1"...
+"alice1" - 0 Error(s), 4 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SYS_INIT?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_MS?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?UART_INIT?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=11.0 xdata=0 code=413
+creating hex file from "alice1"...
+"alice1" - 0 Error(s), 4 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_MS?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?UART_INIT?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=11.0 xdata=0 code=416
+creating hex file from "alice1"...
+"alice1" - 0 Error(s), 3 Warning(s).

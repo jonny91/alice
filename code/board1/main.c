@@ -1,4 +1,5 @@
-#include <stc12.h>
+#include <STC/STC12C5A60S2.H>
+#include <common.h>
 #include "uart.h"
 
 sbit STEP_1_SIGNAL = P0^0;	  //第一关完成
@@ -10,6 +11,8 @@ void playStep3();
 
 void main()
 {
+	sys_init();
+
 	TMOD = 0x01;
 	EA = 1;
 	ET0 = 1;

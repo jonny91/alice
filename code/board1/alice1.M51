@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        04/19/2016  02:55:29  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        04/28/2016  18:30:05  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -37,11 +37,13 @@ LINK MAP OF MODULE:  alice1 (?C_STARTUP)
             CODE    0023H     0003H     ABSOLUTE     
             CODE    0026H     008CH     UNIT         ?C_C51STARTUP
             CODE    00B2H     005FH     UNIT         ?PR?INTERRUPTTIMER?MAIN
-            CODE    0111H     0019H     UNIT         ?C?LIB_CODE
-            CODE    012AH     0011H     UNIT         ?PR?UART_INIT?MAIN
-            CODE    013BH     000EH     UNIT         ?PR?_SEND?MAIN
-            CODE    0149H     000EH     UNIT         ?PR?MAIN?MAIN
-            CODE    0157H     000AH     UNIT         ?PR?UART?MAIN
+            CODE    0111H     0026H     UNIT         ?PR?_DELAY_MS?MAIN
+            CODE    0137H     001BH     UNIT         ?PR?SYS_INIT?MAIN
+            CODE    0152H     0019H     UNIT         ?C?LIB_CODE
+            CODE    016BH     0011H     UNIT         ?PR?UART_INIT?MAIN
+            CODE    017CH     0011H     UNIT         ?PR?MAIN?MAIN
+            CODE    018DH     000EH     UNIT         ?PR?_SEND?MAIN
+            CODE    019BH     000AH     UNIT         ?PR?UART?MAIN
 
 
 
@@ -55,13 +57,16 @@ SEGMENT
   +--> ?PR?MAIN?MAIN
   +--> ?C_INITSEG
 
+?PR?MAIN?MAIN
+  +--> ?PR?SYS_INIT?MAIN
+BL51 BANKED LINKER/LOCATER V6.22                                                      04/28/2016  18:30:05  PAGE 2
+
+
+
 *** NEW ROOT ***************************************************
 
 ?PR?INTERRUPTTIMER?MAIN
   +--> ?PR?PLAYSTEP3?MAIN
-BL51 BANKED LINKER/LOCATER V6.22                                                      04/19/2016  02:55:29  PAGE 2
-
-
 
 
 
@@ -106,7 +111,24 @@ SYMBOL TABLE OF MODULE:  alice1 (?C_STARTUP)
 
   -------         MODULE        MAIN
   C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0092H         PUBLIC        P1M0
+  D:0093H         PUBLIC        P0M1
+  D:0096H         PUBLIC        P2M0
+  D:0091H         PUBLIC        P1M1
   D:0080H         PUBLIC        P0
+  D:00B2H         PUBLIC        P3M0
+  D:0095H         PUBLIC        P2M1
+  D:0090H         PUBLIC        P1
+BL51 BANKED LINKER/LOCATER V6.22                                                      04/28/2016  18:30:05  PAGE 3
+
+
+  D:00B4H         PUBLIC        P4M0
+  D:00B1H         PUBLIC        P3M1
+  D:00A0H         PUBLIC        P2
+  D:00B3H         PUBLIC        P4M1
+  D:00B0H         PUBLIC        P3
+  D:00C0H         PUBLIC        P4
+  D:00C8H         PUBLIC        P5
   B:00A8H.7       PUBLIC        EA
   C:0007H         PUBLIC        playStep3
   D:00A8H         PUBLIC        IE
@@ -116,17 +138,14 @@ SYMBOL TABLE OF MODULE:  alice1 (?C_STARTUP)
   B:0098H.0       PUBLIC        RI
   B:0098H.1       PUBLIC        TI
   D:00D8H         PUBLIC        CCON
-  C:0149H         PUBLIC        main
-  C:013BH         PUBLIC        _send
+  C:017CH         PUBLIC        main
+  C:018DH         PUBLIC        _send
   D:0099H         PUBLIC        SBUF
-BL51 BANKED LINKER/LOCATER V6.22                                                      04/19/2016  02:55:29  PAGE 3
-
-
   D:0098H         PUBLIC        SCON
   D:0089H         PUBLIC        TMOD
   D:0088H         PUBLIC        TCON
   D:0008H         PUBLIC        step
-  C:0157H         PUBLIC        uart
+  C:019BH         PUBLIC        uart
   D:0009H         PUBLIC        buf
   B:00A8H.1       PUBLIC        ET0
   D:008CH         PUBLIC        TH0
@@ -134,35 +153,68 @@ SYMBOL TABLE OF MODULE:  alice1 (?C_STARTUP)
   B:0098H.7       PUBLIC        SM0
   D:008AH         PUBLIC        TL0
   B:0098H.6       PUBLIC        SM1
-  C:012AH         PUBLIC        uart_init
+  C:0111H         PUBLIC        _delay_ms
+  C:016BH         PUBLIC        uart_init
   B:0088H.6       PUBLIC        TR1
   B:0080H.0       PUBLIC        STEP_1_SIGNAL
   B:0080H.1       PUBLIC        STEP_2_SIGNAL
+  C:0137H         PUBLIC        sys_init
   C:00B2H         PUBLIC        interruptTimer
   D:00D0H         PUBLIC        PSW
+  D:0094H         PUBLIC        P0M0
+  -------         PROC          SYS_INIT
+  C:0137H         LINE#         17
+  C:0137H         LINE#         18
+  C:0137H         LINE#         19
+  C:013AH         LINE#         20
+  C:013DH         LINE#         22
+  C:013FH         LINE#         23
+  C:0142H         LINE#         25
+  C:0144H         LINE#         26
+  C:0147H         LINE#         28
+  C:0149H         LINE#         29
+  C:014CH         LINE#         31
+  C:014EH         LINE#         32
+  C:0151H         LINE#         33
+  -------         ENDPROC       SYS_INIT
+  -------         PROC          _DELAY_MS
+  D:0006H         SYMBOL        count
+BL51 BANKED LINKER/LOCATER V6.22                                                      04/28/2016  18:30:05  PAGE 4
+
+
+  -------         DO            
+  D:0004H         SYMBOL        i
+  D:0002H         SYMBOL        j
+  -------         ENDDO         
+  C:0111H         LINE#         40
+  C:0111H         LINE#         41
+  C:0111H         LINE#         43
+  C:0121H         LINE#         44
+  C:0136H         LINE#         45
+  -------         ENDPROC       _DELAY_MS
   -------         PROC          UART_INIT
-  C:012AH         LINE#         12
-  C:012AH         LINE#         13
-  C:012AH         LINE#         14
-  C:012CH         LINE#         15
-  C:012FH         LINE#         24
-  C:0132H         LINE#         26
-  C:0134H         LINE#         28
-  C:0136H         LINE#         29
-  C:0138H         LINE#         30
-  C:013AH         LINE#         31
+  C:016BH         LINE#         12
+  C:016BH         LINE#         13
+  C:016BH         LINE#         14
+  C:016DH         LINE#         15
+  C:0170H         LINE#         24
+  C:0173H         LINE#         26
+  C:0175H         LINE#         28
+  C:0177H         LINE#         29
+  C:0179H         LINE#         30
+  C:017BH         LINE#         31
   -------         ENDPROC       UART_INIT
   -------         PROC          _SEND
   D:0007H         SYMBOL        d
-  C:013BH         LINE#         37
-  C:013BH         LINE#         38
-  C:013BH         LINE#         39
-  C:013DH         LINE#         40
-  C:013FH         LINE#         41
-  C:0141H         LINE#         42
-  C:0144H         LINE#         43
-  C:0146H         LINE#         44
-  C:0148H         LINE#         46
+  C:018DH         LINE#         37
+  C:018DH         LINE#         38
+  C:018DH         LINE#         39
+  C:018FH         LINE#         40
+  C:0191H         LINE#         41
+  C:0193H         LINE#         42
+  C:0196H         LINE#         43
+  C:0198H         LINE#         44
+  C:019AH         LINE#         46
   -------         ENDPROC       _SEND
   -------         PROC          _SENDC
   D:0001H         SYMBOL        pd
@@ -176,60 +228,64 @@ SYMBOL TABLE OF MODULE:  alice1 (?C_STARTUP)
   C:0020H         LINE#         59
   -------         ENDPROC       _SENDC
   -------         PROC          UART
-  C:0157H         LINE#         65
-  C:0157H         LINE#         67
-  C:0159H         LINE#         68
-BL51 BANKED LINKER/LOCATER V6.22                                                      04/19/2016  02:55:29  PAGE 4
-
-
-  C:015BH         LINE#         69
-  C:015EH         LINE#         70
-  C:0160H         LINE#         71
+  C:019BH         LINE#         65
+  C:019BH         LINE#         67
+  C:019DH         LINE#         68
+  C:019FH         LINE#         69
+  C:01A2H         LINE#         70
+  C:01A4H         LINE#         71
   -------         ENDPROC       UART
   -------         PROC          MAIN
-  C:0149H         LINE#         11
-  C:0149H         LINE#         12
-  C:0149H         LINE#         13
-  C:014CH         LINE#         14
-  C:014EH         LINE#         15
-  C:0150H         LINE#         16
-  C:0153H         LINE#         17
-  C:0156H         LINE#         18
+  C:017CH         LINE#         12
+  C:017CH         LINE#         13
+  C:017CH         LINE#         14
+BL51 BANKED LINKER/LOCATER V6.22                                                      04/28/2016  18:30:05  PAGE 5
+
+
+  C:017FH         LINE#         15
+  C:0182H         LINE#         16
+  C:0184H         LINE#         17
+  C:0186H         LINE#         18
+  C:0189H         LINE#         19
+  C:018CH         LINE#         20
   -------         ENDPROC       MAIN
   -------         PROC          INTERRUPTTIMER
-  C:00B2H         LINE#         20
-  C:00CFH         LINE#         22
-  C:00D2H         LINE#         23
-  C:00D5H         LINE#         26
-  C:00D9H         LINE#         27
-  C:00D9H         LINE#         28
-  C:00DCH         LINE#         29
-  C:00DCH         LINE#         30
-  C:00DFH         LINE#         31
-  C:00DFH         LINE#         32
-  C:00E1H         LINE#         33
-  C:00E6H         LINE#         34
-  C:00E6H         LINE#         35
-  C:00E9H         LINE#         36
-  C:00E9H         LINE#         37
-  C:00ECH         LINE#         38
-  C:00ECH         LINE#         39
-  C:00EEH         LINE#         40
-  C:00F3H         LINE#         41
-  C:00F3H         LINE#         42
-  C:00F6H         LINE#         43
-  C:00F6H         LINE#         44
+  C:00B2H         LINE#         22
+  C:00CFH         LINE#         24
+  C:00D2H         LINE#         25
+  C:00D5H         LINE#         28
+  C:00D9H         LINE#         29
+  C:00D9H         LINE#         30
+  C:00DCH         LINE#         31
+  C:00DCH         LINE#         32
+  C:00DFH         LINE#         33
+  C:00DFH         LINE#         34
+  C:00E1H         LINE#         35
+  C:00E6H         LINE#         36
+  C:00E6H         LINE#         37
+  C:00E9H         LINE#         38
+  C:00E9H         LINE#         39
+  C:00ECH         LINE#         40
+  C:00ECH         LINE#         41
+  C:00EEH         LINE#         42
+  C:00F3H         LINE#         43
+  C:00F3H         LINE#         44
+  C:00F6H         LINE#         45
+  C:00F6H         LINE#         46
   -------         ENDPROC       INTERRUPTTIMER
   -------         PROC          PLAYSTEP3
-  C:0007H         LINE#         46
-  C:0007H         LINE#         47
   C:0007H         LINE#         48
+  C:0007H         LINE#         49
+  C:0007H         LINE#         50
   -------         ENDPROC       PLAYSTEP3
   -------         ENDMOD        MAIN
 
   -------         MODULE        ?C?CLDPTR
-  C:0111H         PUBLIC        ?C?CLDPTR
+  C:0152H         PUBLIC        ?C?CLDPTR
   -------         ENDMOD        ?C?CLDPTR
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY_MS?MAIN
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?UART_INIT?MAIN
@@ -237,5 +293,5 @@ SYMBOL TABLE OF MODULE:  alice1 (?C_STARTUP)
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_SENDC?MAIN
 
-Program Size: data=11.0 xdata=0 code=348
-LINK/LOCATE RUN COMPLETE.  2 WARNING(S),  0 ERROR(S)
+Program Size: data=11.0 xdata=0 code=416
+LINK/LOCATE RUN COMPLETE.  3 WARNING(S),  0 ERROR(S)
