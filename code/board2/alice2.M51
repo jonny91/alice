@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        04/29/2016  20:21:52  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        05/01/2016  15:54:21  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -11,6 +11,7 @@ MEMORY MODEL: SMALL
 INPUT MODULES INCLUDED:
   STARTUP.obj (?C_STARTUP)
   main.obj (MAIN)
+  D:\KEIL\C51\LIB\C51S.LIB (?C_INIT)
   D:\KEIL\C51\LIB\C51S.LIB (?C?CLDPTR)
 
 
@@ -22,25 +23,26 @@ LINK MAP OF MODULE:  alice2 (?C_STARTUP)
 
             * * * * * * *   D A T A   M E M O R Y   * * * * * * *
             REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
-            DATA    0008H     0001H     UNIT         ?DT?MAIN
-            IDATA   0009H     0001H     UNIT         ?STACK
+            DATA    0008H     0002H     UNIT         ?DT?MAIN
+            IDATA   000AH     0001H     UNIT         ?STACK
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
             CODE    0000H     0003H     ABSOLUTE     
             CODE    0003H     001BH     UNIT         ?PR?SYS_INIT?MAIN
-            CODE    001EH     0001H     UNIT         ?PR?MAIN?MAIN
-                    001FH     0004H                  *** GAP ***
+            CODE    001EH     0004H     UNIT         ?C_INITSEG
+                    0022H     0001H                  *** GAP ***
             CODE    0023H     0003H     ABSOLUTE     
             CODE    0026H     00D9H     UNIT         ?PR?_MP3?MAIN
-            CODE    00FFH     0026H     UNIT         ?PR?_DELAY_MS?MAIN
-            CODE    0125H     001AH     UNIT         ?PR?_SEND?MAIN
-            CODE    013FH     0019H     UNIT         ?C?LIB_CODE
-            CODE    0158H     0016H     UNIT         ?PR?_PLAY_MP3?MAIN
-            CODE    016EH     0016H     UNIT         ?PR?MP3_INIT?MAIN
-            CODE    0184H     0013H     UNIT         ?PR?_SENDC?MAIN
-            CODE    0197H     0011H     UNIT         ?PR?UART_INIT?MAIN
-            CODE    01A8H     000CH     UNIT         ?C_C51STARTUP
-            CODE    01B4H     000AH     UNIT         ?PR?UART?MAIN
+            CODE    00FFH     008CH     UNIT         ?C_C51STARTUP
+            CODE    018BH     0031H     UNIT         ?PR?MAIN?MAIN
+            CODE    01BCH     0026H     UNIT         ?PR?_DELAY_MS?MAIN
+            CODE    01E2H     001AH     UNIT         ?PR?_SEND?MAIN
+            CODE    01FCH     0019H     UNIT         ?C?LIB_CODE
+            CODE    0215H     0016H     UNIT         ?PR?_PLAY_MP3?MAIN
+            CODE    022BH     0016H     UNIT         ?PR?MP3_INIT?MAIN
+            CODE    0241H     0013H     UNIT         ?PR?_SENDC?MAIN
+            CODE    0254H     0011H     UNIT         ?PR?UART_INIT?MAIN
+            CODE    0265H     000AH     UNIT         ?PR?UART?MAIN
 
 
 
@@ -52,6 +54,22 @@ SEGMENT
 ---------------------
 ?C_C51STARTUP
   +--> ?PR?MAIN?MAIN
+  +--> ?C_INITSEG
+
+?PR?MAIN?MAIN
+  +--> ?PR?SYS_INIT?MAIN
+  +--> ?PR?MP3_INIT?MAIN
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/01/2016  15:54:21  PAGE 2
+
+
+  +--> ?PR?_DELAY_MS?MAIN
+
+?PR?MP3_INIT?MAIN
+  +--> ?PR?_MP3?MAIN
+  +--> ?PR?_DELAY_MS?MAIN
+
+?PR?_MP3?MAIN
+  +--> ?PR?_SEND?MAIN
 
 
 
@@ -59,13 +77,10 @@ SYMBOL TABLE OF MODULE:  alice2 (?C_STARTUP)
 
   VALUE           TYPE          NAME
   ----------------------------------
-BL51 BANKED LINKER/LOCATER V6.22                                                      04/29/2016  20:21:52  PAGE 2
-
-
 
   -------         MODULE        ?C_STARTUP
-  C:01A8H         SEGMENT       ?C_C51STARTUP
-  I:0009H         SEGMENT       ?STACK
+  C:00FFH         SEGMENT       ?C_C51STARTUP
+  I:000AH         SEGMENT       ?STACK
   C:0000H         PUBLIC        ?C_STARTUP
   D:00E0H         SYMBOL        ACC
   D:00F0H         SYMBOL        B
@@ -74,7 +89,7 @@ SYMBOL TABLE OF MODULE:  alice2 (?C_STARTUP)
   N:0000H         SYMBOL        IBPSTACK
   N:0100H         SYMBOL        IBPSTACKTOP
   N:0080H         SYMBOL        IDATALEN
-  C:01ABH         SYMBOL        IDATALOOP
+  C:0102H         SYMBOL        IDATALOOP
   N:0000H         SYMBOL        PBPSTACK
   N:0100H         SYMBOL        PBPSTACKTOP
   N:0000H         SYMBOL        PDATALEN
@@ -83,18 +98,18 @@ SYMBOL TABLE OF MODULE:  alice2 (?C_STARTUP)
   N:0000H         SYMBOL        PPAGEENABLE
   D:00A0H         SYMBOL        PPAGE_SFR
   D:0081H         SYMBOL        SP
-  C:01A8H         SYMBOL        STARTUP1
+  C:00FFH         SYMBOL        STARTUP1
   N:0000H         SYMBOL        XBPSTACK
   N:0000H         SYMBOL        XBPSTACKTOP
   N:0000H         SYMBOL        XDATALEN
   N:0000H         SYMBOL        XDATASTART
   C:0000H         LINE#         126
-  C:01A8H         LINE#         133
-  C:01AAH         LINE#         134
-  C:01ABH         LINE#         135
-  C:01ACH         LINE#         136
-  C:01AEH         LINE#         185
-  C:01B1H         LINE#         196
+  C:00FFH         LINE#         133
+  C:0101H         LINE#         134
+  C:0102H         LINE#         135
+  C:0103H         LINE#         136
+  C:0105H         LINE#         185
+  C:0108H         LINE#         196
   -------         ENDMOD        ?C_STARTUP
 
   -------         MODULE        MAIN
@@ -104,6 +119,9 @@ SYMBOL TABLE OF MODULE:  alice2 (?C_STARTUP)
   D:0096H         PUBLIC        P2M0
   D:0091H         PUBLIC        P1M1
   D:0080H         PUBLIC        P0
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/01/2016  15:54:21  PAGE 3
+
+
   D:00B2H         PUBLIC        P3M0
   D:0095H         PUBLIC        P2M1
   D:0090H         PUBLIC        P1
@@ -116,31 +134,32 @@ SYMBOL TABLE OF MODULE:  alice2 (?C_STARTUP)
   D:00C8H         PUBLIC        P5
   B:00A8H.7       PUBLIC        EA
   D:00A8H         PUBLIC        IE
-  C:0184H         PUBLIC        _sendc
+  C:0241H         PUBLIC        _sendc
   C:0026H         PUBLIC        _mp3
   B:00A8H.4       PUBLIC        ES
-BL51 BANKED LINKER/LOCATER V6.22                                                      04/29/2016  20:21:52  PAGE 3
-
-
   D:00B8H         PUBLIC        IP
   B:0098H.0       PUBLIC        RI
+  B:0080H.1       PUBLIC        OUTPUT_2_DOOR
   B:0098H.1       PUBLIC        TI
+  B:0080H.1       PUBLIC        INPUT_2
   D:00D8H         PUBLIC        CCON
-  C:001EH         PUBLIC        main
-  C:016EH         PUBLIC        mp3_init
-  C:0158H         PUBLIC        _play_mp3
-  C:0131H         PUBLIC        _send
+  C:018BH         PUBLIC        main
+  C:022BH         PUBLIC        mp3_init
+  C:0215H         PUBLIC        _play_mp3
+  C:01EEH         PUBLIC        _send
   D:0099H         PUBLIC        SBUF
   D:0098H         PUBLIC        SCON
   D:0089H         PUBLIC        TMOD
   D:0088H         PUBLIC        TCON
-  C:01B4H         PUBLIC        uart
-  D:0008H         PUBLIC        buf
+  D:0008H         PUBLIC        step
+  C:0265H         PUBLIC        uart
+  D:0009H         PUBLIC        buf
   D:008DH         PUBLIC        TH1
+  B:0080H.1       PUBLIC        INPUT_3_LINE_SIGNAL
   B:0098H.7       PUBLIC        SM0
   B:0098H.6       PUBLIC        SM1
-  C:00FFH         PUBLIC        _delay_ms
-  C:0197H         PUBLIC        uart_init
+  C:01BCH         PUBLIC        _delay_ms
+  C:0254H         PUBLIC        uart_init
   B:0088H.6       PUBLIC        TR1
   C:0003H         PUBLIC        sys_init
   D:00D0H         PUBLIC        PSW
@@ -160,88 +179,88 @@ SYMBOL TABLE OF MODULE:  alice2 (?C_STARTUP)
   C:001AH         LINE#         32
   C:001DH         LINE#         33
   -------         ENDPROC       SYS_INIT
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/01/2016  15:54:21  PAGE 4
+
+
   -------         PROC          _DELAY_MS
   D:0006H         SYMBOL        count
   -------         DO            
   D:0004H         SYMBOL        i
   D:0002H         SYMBOL        j
   -------         ENDDO         
-  C:00FFH         LINE#         40
-  C:00FFH         LINE#         41
-  C:00FFH         LINE#         43
-  C:010FH         LINE#         44
-  C:0124H         LINE#         45
+  C:01BCH         LINE#         40
+  C:01BCH         LINE#         41
+  C:01BCH         LINE#         43
+  C:01CCH         LINE#         44
+  C:01E1H         LINE#         45
   -------         ENDPROC       _DELAY_MS
   -------         PROC          UART_INIT
-  C:0197H         LINE#         12
-  C:0197H         LINE#         13
-  C:0197H         LINE#         14
-  C:0199H         LINE#         15
-  C:019CH         LINE#         24
-  C:019FH         LINE#         26
-BL51 BANKED LINKER/LOCATER V6.22                                                      04/29/2016  20:21:52  PAGE 4
-
-
-  C:01A1H         LINE#         28
-  C:01A3H         LINE#         29
-  C:01A5H         LINE#         30
-  C:01A7H         LINE#         31
+  C:0254H         LINE#         12
+  C:0254H         LINE#         13
+  C:0254H         LINE#         14
+  C:0256H         LINE#         15
+  C:0259H         LINE#         24
+  C:025CH         LINE#         26
+  C:025EH         LINE#         28
+  C:0260H         LINE#         29
+  C:0262H         LINE#         30
+  C:0264H         LINE#         31
   -------         ENDPROC       UART_INIT
-  C:0125H         SYMBOL        L?0048
-  -------         PROC          L?0047
-  -------         ENDPROC       L?0047
-  C:0125H         SYMBOL        L?0048
+  C:01E2H         SYMBOL        L?0056
+  -------         PROC          L?0055
+  -------         ENDPROC       L?0055
+  C:01E2H         SYMBOL        L?0056
   -------         PROC          _SEND
   D:0007H         SYMBOL        d
-  C:0131H         LINE#         37
-  C:0131H         LINE#         38
-  C:0131H         LINE#         39
-  C:0133H         LINE#         40
-  C:0135H         LINE#         41
-  C:0137H         LINE#         42
-  C:013AH         LINE#         43
-  C:013CH         LINE#         44
-  C:013EH         LINE#         46
+  C:01EEH         LINE#         37
+  C:01EEH         LINE#         38
+  C:01EEH         LINE#         39
+  C:01F0H         LINE#         40
+  C:01F2H         LINE#         41
+  C:01F4H         LINE#         42
+  C:01F7H         LINE#         43
+  C:01F9H         LINE#         44
+  C:01FBH         LINE#         46
   -------         ENDPROC       _SEND
   -------         PROC          _SENDC
   D:0001H         SYMBOL        pd
-  C:0184H         LINE#         52
-  C:0184H         LINE#         53
-  C:0184H         LINE#         54
-  C:018AH         LINE#         55
-  C:018AH         LINE#         56
-  C:018DH         LINE#         57
-  C:0194H         LINE#         58
-  C:0196H         LINE#         59
+  C:0241H         LINE#         52
+  C:0241H         LINE#         53
+  C:0241H         LINE#         54
+  C:0247H         LINE#         55
+  C:0247H         LINE#         56
+  C:024AH         LINE#         57
+  C:0251H         LINE#         58
+  C:0253H         LINE#         59
   -------         ENDPROC       _SENDC
   -------         PROC          UART
-  C:01B4H         LINE#         65
-  C:01B4H         LINE#         67
-  C:01B6H         LINE#         68
-  C:01B8H         LINE#         69
-  C:01BBH         LINE#         70
-  C:01BDH         LINE#         71
+  C:0265H         LINE#         65
+  C:0265H         LINE#         67
+  C:0267H         LINE#         68
+  C:0269H         LINE#         69
+  C:026CH         LINE#         70
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/01/2016  15:54:21  PAGE 5
+
+
+  C:026EH         LINE#         71
   -------         ENDPROC       UART
   -------         PROC          _PLAY_MP3
   D:0005H         SYMBOL        floder
   D:0006H         SYMBOL        music
-  C:0158H         LINE#         7
-  C:015CH         LINE#         8
-  C:015CH         LINE#         9
-  C:015CH         LINE#         10
-  C:015CH         LINE#         11
-  C:015FH         LINE#         12
-  C:0164H         LINE#         13
-  C:0169H         LINE#         14
+  C:0215H         LINE#         7
+  C:0219H         LINE#         8
+  C:0219H         LINE#         9
+  C:0219H         LINE#         10
+  C:0219H         LINE#         11
+  C:021CH         LINE#         12
+  C:0221H         LINE#         13
+  C:0226H         LINE#         14
   -------         ENDPROC       _PLAY_MP3
   -------         PROC          _MP3
   D:0007H         SYMBOL        comd
   C:0026H         LINE#         16
   C:0026H         LINE#         17
   C:0026H         LINE#         18
-BL51 BANKED LINKER/LOCATER V6.22                                                      04/29/2016  20:21:52  PAGE 5
-
-
   C:0061H         LINE#         19
   C:0061H         LINE#         20
   C:0061H         LINE#         21
@@ -280,6 +299,9 @@ SYMBOL TABLE OF MODULE:  alice2 (?C_STARTUP)
   C:00ACH         LINE#         54
   C:00B1H         LINE#         55
   C:00B6H         LINE#         56
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/01/2016  15:54:21  PAGE 6
+
+
   C:00B8H         LINE#         57
   C:00B8H         LINE#         58
   C:00BAH         LINE#         59
@@ -299,9 +321,6 @@ SYMBOL TABLE OF MODULE:  alice2 (?C_STARTUP)
   C:00E0H         LINE#         74
   C:00E3H         LINE#         75
   C:00E8H         LINE#         76
-BL51 BANKED LINKER/LOCATER V6.22                                                      04/29/2016  20:21:52  PAGE 6
-
-
   C:00EAH         LINE#         77
   C:00EAH         LINE#         78
   C:00ECH         LINE#         79
@@ -315,28 +334,54 @@ SYMBOL TABLE OF MODULE:  alice2 (?C_STARTUP)
   C:00FEH         LINE#         88
   -------         ENDPROC       _MP3
   -------         PROC          MP3_INIT
-  C:016EH         LINE#         94
-  C:016EH         LINE#         95
-  C:016EH         LINE#         96
-  C:0173H         LINE#         97
-  C:0178H         LINE#         101
-  C:017AH         LINE#         102
-  C:0181H         LINE#         103
-  C:0183H         LINE#         104
+  C:022BH         LINE#         94
+  C:022BH         LINE#         95
+  C:022BH         LINE#         96
+  C:0230H         LINE#         97
+  C:0235H         LINE#         101
+  C:0237H         LINE#         102
+  C:023EH         LINE#         103
+  C:0240H         LINE#         104
   -------         ENDPROC       MP3_INIT
   -------         PROC          MAIN
-  C:001EH         LINE#         7
-  C:001EH         LINE#         8
-  C:001EH         LINE#         9
+  C:018BH         LINE#         11
+  C:018BH         LINE#         12
+  C:018BH         LINE#         13
+  C:018EH         LINE#         14
+  C:0191H         LINE#         15
+  C:0191H         LINE#         16
+  C:0191H         LINE#         17
+  C:0196H         LINE#         18
+  C:0196H         LINE#         19
+  C:0199H         LINE#         20
+  C:0199H         LINE#         21
+  C:01A0H         LINE#         22
+  C:01A3H         LINE#         23
+  C:01A3H         LINE#         24
+  C:01A5H         LINE#         25
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/01/2016  15:54:21  PAGE 7
+
+
+  C:01A8H         LINE#         26
+  C:01A8H         LINE#         27
+  C:01A8H         LINE#         28
+  C:01A8H         LINE#         30
+  C:01ADH         LINE#         31
+  C:01ADH         LINE#         32
+  C:01B0H         LINE#         33
+  C:01B0H         LINE#         34
+  C:01B7H         LINE#         35
+  C:01BAH         LINE#         36
+  C:01BAH         LINE#         38
+  C:01BAH         LINE#         39
+  C:01BAH         LINE#         40
+  C:01BAH         LINE#         41
   -------         ENDPROC       MAIN
   -------         ENDMOD        MAIN
 
   -------         MODULE        ?C?CLDPTR
-  C:013FH         PUBLIC        ?C?CLDPTR
+  C:01FCH         PUBLIC        ?C?CLDPTR
   -------         ENDMOD        ?C?CLDPTR
-
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?SYS_INIT?MAIN
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?UART_INIT?MAIN
@@ -347,8 +392,5 @@ SYMBOL TABLE OF MODULE:  alice2 (?C_STARTUP)
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_PLAY_MP3?MAIN
 
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?MP3_INIT?MAIN
-
-Program Size: data=10.0 xdata=0 code=442
-LINK/LOCATE RUN COMPLETE.  5 WARNING(S),  0 ERROR(S)
+Program Size: data=11.0 xdata=0 code=622
+LINK/LOCATE RUN COMPLETE.  3 WARNING(S),  0 ERROR(S)
