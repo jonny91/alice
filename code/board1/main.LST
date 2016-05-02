@@ -1,9 +1,9 @@
-C51 COMPILER V9.00   MAIN                                                                  04/29/2016 19:52:47 PAGE 1   
+C51 COMPILER V9.02   MAIN                                                                  05/03/2016 00:39:54 PAGE 1   
 
 
-C51 COMPILER V9.00, COMPILATION OF MODULE MAIN
+C51 COMPILER V9.02, COMPILATION OF MODULE MAIN
 OBJECT MODULE PLACED IN main.OBJ
-COMPILER INVOKED BY: D:\Keil\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND
+COMPILER INVOKED BY: F:\Keil\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND
 
 line level    source
 
@@ -12,109 +12,133 @@ line level    source
    3          #include "uart.h"
    4          #include "mp3.h"
    5          
-   6          sbit STEP_0_SIGNAL = P0^5;      //第一关开启 关门
+   6          sbit STEP_0_SIGNAL = P4^4;      //第一关开启 关门
    7          sbit STEP_1_SIGNAL = P0^0;        //第一关完成
    8          sbit STEP_2_SIGNAL = P0^4;         //第二个完成 霍尔开关的接入
-   9          sbit STEP_5_SIGANL; // 
-*** ERROR C141 IN LINE 9 OF MAIN.C: syntax error near ';', expected '='
+   9          sbit STEP_5_SIGANL = P1^4; // 
   10          sbit STEP_6_LINE_SIGNAL = P4^0; //16个点连线接入
-*** ERROR C202 IN LINE 10 OF MAIN.C: 'STEP_6_LINE_SIGNAL': undefined identifier
   11          sbit STEP_6_TO_7_DOOR =  P4^2; //第六关完成的电磁锁
-  12          sbit STEP_7_DOOR;
-*** ERROR C141 IN LINE 12 OF MAIN.C: syntax error near ';', expected '='
-  13          sbit STEP_7_SIGNAL; 
-*** ERROR C202 IN LINE 13 OF MAIN.C: 'STEP_7_SIGNAL': undefined identifier
-  14          //当前的步骤 没有参与过 = 0
-  15          signed char step = 0;
-  16          
-  17          void playStep3();
-  18          
-  19          void main()
-  20          {
-  21   1              sys_init();
-  22   1              mp3_init();
-  23   1              
-  24   1              while(1)
-  25   1              {
-  26   2                      if(step == 0)
-  27   2                      {
-  28   3                              if(STEP_0_SIGNAL == 1) //门关了 
-  29   3                              {
-  30   4                                      step = 2; 
-  31   4                                      delay_ms(5000);
-  32   4                                      
-  33   4                                      play_mp3(0x00,0x01);       //播放第一个文件夹的第一个音乐
-  34   4                              } 
-  35   3                      }
-  36   2                      //第一关由敲门开关控制 直接就算完成了 
-  37   2                      if(step == 2)  //机关4
-  38   2                      {
-  39   3                              if(STEP_2_SIGNAL == 1) //霍尔开关 
-  40   3                              {
-  41   4                                      step = 5; //进去第5个谜题 
-  42   4                                      
-  43   4                                      delay_ms(5000);
-  44   4                                      play_mp3(0x00,0x02);
-  45   4                              }
-  46   3                      }
-  47   2      
-  48   2                      if(step == 5)
-  49   2                      {
-  50   3                              if(STEP_6_LINE_SIGNAL == 1)
-*** ERROR C202 IN LINE 50 OF MAIN.C: 'STEP_6_LINE_SIGNAL': undefined identifier
-C51 COMPILER V9.00   MAIN                                                                  04/29/2016 19:52:47 PAGE 2   
+  12          sbit STEP_7_DOOR = P1^2;
+  13          sbit STEP_7_SIGNAL = P1^3; 
+  14          
+  15          sbit TEST_HIGH = P0^1;
+  16          sbit TEST_LOW = P0^2;
+  17          //当前的步骤 没有参与过 = 0
+  18          signed char step = 0;
+  19          
+  20          sbit OUT3_2 = P3^2;
+  21          sbit OUT3_3 = P3^3;
+  22          sbit OUT3_4 = P3^4;
+  23          sbit OUT3_5 = P3^5;
+  24          sbit OUT3_6 = P3^6;
+  25          sbit OUT3_7 = P3^7;
+  26          
+  27          void playStep3();
+  28          
+  29          void main()
+  30          {
+  31   1              sys_init();
+  32   1              OUT3_2 = 0;
+  33   1              OUT3_3 = 0;
+  34   1              OUT3_4 = 0;     
+  35   1              OUT3_5 = 0;     
+  36   1              OUT3_6 = 0;     
+  37   1              OUT3_7 = 0;
+  38   1              uart_init();
+  39   1              mp3_init();
+  40   1              play_mp3(0x00,0x01);
+  41   1              return;
+  42   1              
+  43   1              while(1)
+  44   1              {
+  45   2                      TEST_HIGH = 1;
+  46   2                      TEST_LOW = 0;
+  47   2                      if(step == 0)
+  48   2                      {
+  49   3                              mp3(0x00);
+  50   3                              if(STEP_0_SIGNAL == 1) //门关了 
+  51   3                              {
+  52   4                                      step = 2; 
+  53   4                                      delay_ms(5000);
+  54   4                                      
+  55   4                                      play_mp3(0x00,0x01);       //播放第一个文件夹的第一个音乐
+C51 COMPILER V9.02   MAIN                                                                  05/03/2016 00:39:54 PAGE 2   
 
-  51   3                              {       
-  52   4                                      delay_ms(500);
-  53   4                                      if(STEP_5_SIGANL == 1)
-*** ERROR C202 IN LINE 53 OF MAIN.C: 'STEP_5_SIGANL': undefined identifier
-  54   4                                      {
-  55   5                                              step = 6;
-  56   5                                      } 
-  57   4                              } 
-  58   3                      }
-  59   2                      
-  60   2                      if(step == 6) //机关5 接电线 
-  61   2                      {
-  62   3                              if(STEP_6_LINE_SIGNAL == 1)
-*** ERROR C202 IN LINE 62 OF MAIN.C: 'STEP_6_LINE_SIGNAL': undefined identifier
-  63   3                              {
-  64   4                                      delay_ms(500);
-  65   4                                      if(STEP_6_LINE_SIGNAL == 1) //接线成功 第6关完成 
-*** ERROR C202 IN LINE 65 OF MAIN.C: 'STEP_6_LINE_SIGNAL': undefined identifier
-  66   4                                      {
-  67   5                                              step = 7;
-  68   5                                              play_mp3(0x00,0x02);
-  69   5                                              STEP_6_TO_7_DOOR = 0; //电磁锁开门 
-*** ERROR C202 IN LINE 69 OF MAIN.C: 'STEP_6_TO_7_DOOR': undefined identifier
-  70   5                                      }
-  71   4                              } 
-  72   3                      }
-  73   2                      
-  74   2                      if(step == 7)//茶会解密
-  75   2                      {
-  76   3                              if(STEP_7_SIGNAL == 1)
-*** ERROR C202 IN LINE 76 OF MAIN.C: 'STEP_7_SIGNAL': undefined identifier
-  77   3                              {
-  78   4                                      delay_ms(500);
-  79   4                                      if(STEP_7_SIGNAL == 1)
-*** ERROR C202 IN LINE 79 OF MAIN.C: 'STEP_7_SIGNAL': undefined identifier
-  80   4                                      {
-  81   5                                              step = 8;
-  82   5                                              play_mp3(0x00,0x02);
-  83   5                                              
-  84   5                                              STEP_7_DOOR = 0; //打开7的门 
-*** ERROR C202 IN LINE 84 OF MAIN.C: 'STEP_7_DOOR': undefined identifier
-  85   5                                      }
-  86   4                              }
-  87   3                      } 
-  88   2              }
-  89   1      }
-  90          
-  91          //初始化所有口
-  92          void INIT_COM()
-  93          {
-  94   1              
-  95   1      }
+  56   4                              } 
+  57   3                      }
+  58   2                      //第一关由敲门开关控制 直接就算完成了 
+  59   2                      if(step == 2)  //机关4
+  60   2                      {
+  61   3                              if(STEP_2_SIGNAL == 1) //霍尔开关 
+  62   3                              {
+  63   4                                      step = 5; //进去第5个谜题 
+  64   4                                      
+  65   4                                      delay_ms(5000);
+  66   4                                      play_mp3(0x00,0x02);
+  67   4                              }
+  68   3                      }
+  69   2      
+  70   2                      if(step == 5)
+  71   2                      {
+  72   3                              if(STEP_6_LINE_SIGNAL == 1)
+  73   3                              {       
+  74   4                                      delay_ms(500);
+  75   4                                      if(STEP_5_SIGANL == 1)
+  76   4                                      {
+  77   5                                              step = 6;
+  78   5                                      } 
+  79   4                              } 
+  80   3                      }
+  81   2                      
+  82   2                      if(step == 6) //机关5 接电线 
+  83   2                      {
+  84   3                              if(STEP_6_LINE_SIGNAL == 1)
+  85   3                              {
+  86   4                                      delay_ms(500);
+  87   4                                      if(STEP_6_LINE_SIGNAL == 1) //接线成功 第6关完成 
+  88   4                                      {
+  89   5                                              step = 7;
+  90   5                                              play_mp3(0x00,0x02);
+  91   5                                              STEP_6_TO_7_DOOR = 0; //电磁锁开门 
+  92   5                                      }
+  93   4                              } 
+  94   3                      }
+  95   2                      
+  96   2                      if(step == 7)//茶会解密
+  97   2                      {
+  98   3                              if(STEP_7_SIGNAL == 1)
+  99   3                              {
+ 100   4                                      delay_ms(500);
+ 101   4                                      if(STEP_7_SIGNAL == 1)
+ 102   4                                      {
+ 103   5                                              step = 8;
+ 104   5                                              play_mp3(0x00,0x02);
+ 105   5                                              
+ 106   5                                              STEP_7_DOOR = 0; //打开7的门 
+ 107   5                                      }
+ 108   4                              }
+ 109   3                      } 
+ 110   2              }
+ 111   1      }
+ 112          
+ 113          //初始化所有口
+ 114          void INIT_COM()
+ 115          {
+ 116   1              
+ 117   1      }
+C51 COMPILER V9.02   MAIN                                                                  05/03/2016 00:39:54 PAGE 3   
 
-C51 COMPILATION COMPLETE.  0 WARNING(S),  12 ERROR(S)
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    427    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

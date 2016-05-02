@@ -73,7 +73,7 @@ void mp3(unsigned char comd)
 				   send(0X04);//说明指令长度
 				   send(0X41);//指定文件夹播放
 				   send(0X00);//定位到名称为“01”的文件夹
-				   send(0x02);//播放第4个音频文件
+				   send(0x02);//播放第2个音频文件
 				   send(0XEF);//指令结束位 
 		   	       break;
 		case 0X08: send(0X7E);//指令开始位
@@ -99,6 +99,6 @@ void mp3_init()
 
   /*不关闭串行中断的话一上电就会发送STOP，这样会影响曲名和播放歌曲的对应关系*/
   ES=0;					   //串行中断禁止
-  delay_ms(100);			   //等待MP3准备好
+  delay_ms(1000);			   //等待MP3准备好
   ES=1;
 }

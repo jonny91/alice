@@ -3,28 +3,50 @@
 #include "uart.h"
 #include "mp3.h"
 
-sbit STEP_0_SIGNAL = P0^5;	//第一关开启 关门
+sbit STEP_0_SIGNAL = P4^4;	//第一关开启 关门
 sbit STEP_1_SIGNAL = P0^0;	  //第一关完成
 sbit STEP_2_SIGNAL = P0^4;	   //第二个完成 霍尔开关的接入
-sbit STEP_5_SIGANL; // 
+sbit STEP_5_SIGANL = P1^4; // 
 sbit STEP_6_LINE_SIGNAL = P4^0; //16个点连线接入
 sbit STEP_6_TO_7_DOOR =  P4^2; //第六关完成的电磁锁
-sbit STEP_7_DOOR;
-sbit STEP_7_SIGNAL; 
+sbit STEP_7_DOOR = P1^2;
+sbit STEP_7_SIGNAL = P1^3; 
+
+sbit TEST_HIGH = P0^1;
+sbit TEST_LOW = P0^2;
 //当前的步骤 没有参与过 = 0
 signed char step = 0;
+
+sbit OUT3_2 = P3^2;
+sbit OUT3_3 = P3^3;
+sbit OUT3_4 = P3^4;
+sbit OUT3_5 = P3^5;
+sbit OUT3_6 = P3^6;
+sbit OUT3_7 = P3^7;
 
 void playStep3();
 
 void main()
 {
 	sys_init();
+	OUT3_2 = 0;
+	OUT3_3 = 0;
+	OUT3_4 = 0;	
+	OUT3_5 = 0;	
+	OUT3_6 = 0;	
+	OUT3_7 = 0;
+	uart_init();
 	mp3_init();
+	play_mp3(0x00,0x01);
+	return;
 	
 	while(1)
 	{
+		TEST_HIGH = 1;
+		TEST_LOW = 0;
 		if(step == 0)
 		{
+			mp3(0x00);
 			if(STEP_0_SIGNAL == 1) //门关了 
 			{
 				step = 2; 
