@@ -37,9 +37,7 @@ void main()
 	OUT3_7 = 0;
 	uart_init();
 	mp3_init();
-	play_mp3(0x00,0x01);
-	return;
-	
+
 	while(1)
 	{
 		TEST_HIGH = 1;
