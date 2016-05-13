@@ -9,6 +9,8 @@
 #define T1MS (65536-FOSC/12/1000)   //1ms timer calculation method in 12T mode
 #endif
 
+#define GET_ARRAY_LEN(array,len) {len = (sizeof(array) / sizeof(array[0]));}
+
 /*********************************************************/
 /*                                                       */
 /* 系统初始化函数  P1-P4设置成推挽输出                   */
@@ -26,7 +28,7 @@ void sys_init()
 	P2M0=0XFF;		//设置P2口为推挽输出
 	
 	P3M1=0X00;
-	P3M0=0XFF;	    //设置P3为推挽输出	P3.0 3.1 RXD TXD设置为普通IO口 防止音响的异响
+	P3M0=0XFC;	    //设置P3为推挽输出	P3.0 3.1 RXD TXD设置为普通IO口 防止音响的异响
 
 	P4M1=0X00;
 	P4M0=0XFF;      //设置P4为推挽输出
