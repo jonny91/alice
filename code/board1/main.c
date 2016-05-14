@@ -1,10 +1,15 @@
 #include <STC/STC12C5A60S2.H>
+#include <string.h>
 #include <common.h>
 #include "uart.h"
 #include "mp3.h"
 
 //接水管 电磁锁
 sbit OUTPUT_07 = P0^7;
+//正反接推杆
+sbit OUTPUT_21 = P2^1;
+sbit OUTPUT_22 = P2^2;
+
 //水管外接到内部
 sbit INPUT_06 = P0^6;
 //6个门禁
@@ -23,11 +28,13 @@ sbit INPUT_46 = P4^6;
 sbit INPUT_42 = P4^2;
 sbit INPUT_10 = P1^0;
 
+
 //当前的步骤 没有参与过 = 0
 signed char step = 0;
 
 int totalLength;//按钮 总步骤
 char buttonStep[] = {1,2,3,4,5,6};
+char buttonStepPlayer[];
 int PLAY_6_BTN();
 void INIT_COM();
 
@@ -66,22 +73,33 @@ void main()
 		}
 		if(step == 2)  //按6个按钮
 		{
-			if(PLAY_6_BTN() == 1)
+			if(PLAY_6_BTN() == 1)	 //按对了
 			{
 				step = 3;
+				OUTPUT_21 = 1;	 //打开推杆
+				OUTPUT_22 = 0;
 			}
+		}
+
+		if(step == 3)
+		{
+			
 		}
 	}
 }
 
+int btnStep = 0;
 int PLAY_6_BTN()
 {
+  	int i;
 	GET_ARRAY_LEN(buttonStep , totalLength);	
 	if(INPUT_44 == 1)
 	{
 		delay_ms(50);
 		if(INPUT_44 == 1)
 		{
+			buttonStepPlayer[btnStep] =  1;
+			btnStep ++;
 		}
 	}
 	
@@ -90,6 +108,8 @@ int PLAY_6_BTN()
 		delay_ms(50);
 		if(INPUT_45 == 1)
 		{
+			buttonStepPlayer[btnStep] =  2;
+	   		btnStep ++;
 		}
 	}
 	
@@ -98,6 +118,8 @@ int PLAY_6_BTN()
 		delay_ms(50);
 		if(INPUT_41 == 1)
 		{
+			buttonStepPlayer[btnStep] =  3;
+		   	btnStep ++;
 		}
 	}
 	
@@ -106,6 +128,8 @@ int PLAY_6_BTN()
 		delay_ms(50);
 		if(INPUT_46 == 1)
 		{
+			buttonStepPlayer[btnStep] =  4;			
+		   	btnStep ++;
 		}
 	}
 
@@ -114,6 +138,8 @@ int PLAY_6_BTN()
 		delay_ms(50);
 		if(INPUT_42 == 1)
 		{
+			buttonStepPlayer[btnStep] =  5;			
+			btnStep ++;
 		}
 	}
 
@@ -122,10 +148,34 @@ int PLAY_6_BTN()
 		delay_ms(50);
 		if(INPUT_10 == 1)
 		{
+			buttonStepPlayer[btnStep] =  6;			
+			btnStep ++;
 		}
 	}
 
-	return 1;
+	
+	for(i = 0 ; i < btnStep ; i++)
+	{
+		if(buttonStepPlayer[i] == buttonStep[i])
+		{
+			continue;
+		}
+		else   //如果有一位不一样
+		{
+			memset(buttonStepPlayer,0,sizeof(buttonStepPlayer));
+			i = 0;
+			break;
+		}
+	}
+
+	if(i == totalLength - 1)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
 }
 
 
@@ -134,6 +184,10 @@ int PLAY_6_BTN()
 void INIT_COM()
 {
 	INPUT_06 = 0;
+
+	//推杆
+	OUTPUT_21 = 0;
+	OUTPUT_22 = 1;
 
 	//接水管 输出电磁锁
 	OUTPUT_07 = 1;
