@@ -1,62 +1,144 @@
-C51 COMPILER V9.00   MAIN                                                                  05/01/2016 15:54:21 PAGE 1   
+C51 COMPILER V9.02   MAIN                                                                  05/15/2016 23:32:07 PAGE 1   
 
 
-C51 COMPILER V9.00, COMPILATION OF MODULE MAIN
+C51 COMPILER V9.02, COMPILATION OF MODULE MAIN
 OBJECT MODULE PLACED IN main.OBJ
-COMPILER INVOKED BY: D:\Keil\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND
+COMPILER INVOKED BY: F:\Keil\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND
 
 line level    source
 
-   1          #include <STC12C5A60S2.H>
+   1          #include <STC/STC12C5A60S2.H>
    2          #include "common.h"
    3          #include "uart.h" 
    4          #include "mp3.h"
    5          
-   6          sbit INPUT_2 = P0^1; //2中 串联线路输入 
-   7          sbit OUTPUT_2_DOOR = P0^1; //2 到3的 电磁锁 
-   8          sbit INPUT_3_LINE_SIGNAL = P0^1; //3 的 霍尔开关线路输入 
-   9          unsigned char step = 2;
-  10          
-  11          void main()
-  12          {
-  13   1              sys_init();
-  14   1              mp3_init(); 
-  15   1              while(1)
-  16   1              {
-  17   2                      if(step == 2)
-  18   2                      {               
-  19   3                              if(INPUT_2 == 1)
-  20   3                              {
-  21   4                                      delay_ms(500);
-  22   4                                      if(INPUT_2 == 1)
-  23   4                                      {
-  24   5                                              OUTPUT_2_DOOR = 0; // 打开2到3的地磁锁 
-  25   5                                              step = 3;
-  26   5                                      }                       
-  27   4                              }
-  28   3                      }
-  29   2                      
-  30   2                      if(step == 3)
-  31   2                      {
-  32   3                              if(INPUT_3_LINE_SIGNAL == 1)
-  33   3                              {
-  34   4                                      delay_ms(500); 
-  35   4                                      if(INPUT_3_LINE_SIGNAL == 1)
-  36   4                                      {
-  37   5                                              
-  38   5                                      }
-  39   4                              } 
-  40   3                      }
-  41   2              }
-  42   1      }
+   6          //两个继电器
+   7          sbit INPUT_00 = P0^0;
+   8          sbit INPUT_01 = P0^1;
+   9          //4个信箱 继电器
+  10          sbit INPUT_02 = P0^2; 
+  11          sbit INPUT_03 = P0^3; 
+  12          sbit INPUT_04 = P0^4; 
+  13          sbit INPUT_05 = P0^5; 
+  14          
+  15          //接电线继电器
+  16          sbit INPUT_20 = P2^0;
+  17          sbit INPUT_21 = P2^1;
+  18          sbit INPUT_22 = P2^2;
+  19          sbit INPUT_23 = P2^3;
+  20          sbit INPUT_24 = P2^4;
+  21          sbit INPUT_25 = P2^5;
+  22          sbit INPUT_26 = P2^6;
+  23          sbit INPUT_27 = P2^7;
+  24          
+  25          //接电线 推杆
+  26          sbit OUTPUT_34 = P3^4; 
+  27          
+  28          //信封 电磁锁
+  29          sbit OUTPUT_43 = P4^3; 
+  30          
+  31          char step = 0;
+  32          void INIT_COM();
+  33          
+  34          char message[] = {0,0,0,0};
+  35          char i = 0;
+  36          
+  37          void main()
+  38          {
+  39   1              sys_init();
+  40   1              INIT_COM();
+  41   1              uart_init();
+  42   1              mp3_init();
+  43   1              
+  44   1              while(1)
+  45   1              {
+  46   2                      if(step == 0)
+  47   2                      {
+  48   3                              if(INPUT_00 == 0 && INPUT_01 == 0)
+  49   3                              {
+  50   4                                      step = 1;
+  51   4                              }
+  52   3                      }
+  53   2      
+  54   2                      //接电线
+  55   2                      if(step == 1)
+C51 COMPILER V9.02   MAIN                                                                  05/15/2016 23:32:07 PAGE 2   
+
+  56   2                      {
+  57   3                              if(INPUT_20 == 0 && INPUT_21 == 0 && INPUT_22 == 0 && INPUT_23 == 0 && INPUT_24 == 0 && INPUT_25 == 0 &
+             -& INPUT_26 == 0 && INPUT_27 == 0)
+  58   3                              {
+  59   4                                      OUTPUT_34 = 0;
+  60   4                                      step = 2;
+  61   4                              }
+  62   3                      }
+  63   2                      
+  64   2                      if(step == 2)
+  65   2                      {
+  66   3                              if(INPUT_02 == 0)
+  67   3                              {
+  68   4                                      message[0] = 1;
+  69   4                              }
+  70   3                              if(INPUT_03 == 0)
+  71   3                              {
+  72   4                                      message[1] = 1;
+  73   4                              }
+  74   3                              if(INPUT_04 == 0)
+  75   3                              {
+  76   4                                      message[2] = 1;
+  77   4                              }
+  78   3                              if(INPUT_05 == 0)
+  79   3                              {
+  80   4                                      message[3] = 1;
+  81   4                              }
+  82   3      
+  83   3                              for(i = 0 ; i < 4 ; i++)
+  84   3                              {
+  85   4                                      if(i == 3 && message[i] == 1)
+  86   4                                      {
+  87   5                                              step = 3; //信封完成 
+  88   5                                              OUTPUT_43 = 0;//电磁锁 断电 
+  89   5                                      }
+  90   4                              }
+  91   3                      } 
+  92   2              } 
+  93   1      }
+  94          
+  95          
+  96          //初始化所有口
+  97          void INIT_COM()
+  98          {
+  99   1              INPUT_00 = 1;
+ 100   1              INPUT_01 = 1;
+ 101   1      
+ 102   1              INPUT_20 = 1;
+ 103   1              INPUT_21 = 1;
+ 104   1              INPUT_22 = 1;
+ 105   1              INPUT_23 = 1;
+ 106   1              INPUT_24 = 1;
+ 107   1              INPUT_25 = 1;
+ 108   1              INPUT_26 = 1;
+ 109   1              INPUT_27 = 1;
+ 110   1              
+ 111   1              OUTPUT_34 = 1;
+ 112   1      
+ 113   1              INPUT_02 = 1;
+ 114   1              INPUT_03 = 1;
+ 115   1              INPUT_04 = 1;
+ 116   1              INPUT_05 = 1;
+C51 COMPILER V9.02   MAIN                                                                  05/15/2016 23:32:07 PAGE 3   
+
+ 117   1              
+ 118   1              OUTPUT_43 = 1;
+ 119   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    447    ----
+   CODE SIZE        =    553    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =      2    ----
+   DATA SIZE        =      7    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
