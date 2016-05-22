@@ -45,7 +45,7 @@ unsigned char step_1_flag_5 = 0;
 unsigned char step_1_flag_6 = 0;
 
 int btnStep = 0;//玩家按到第几个 
-int totalLength = 6;//按钮 总步骤
+int totalLength;//按钮 总步骤
 unsigned char code buttonStep[6] = {4,5,5,6,6,6};
 unsigned char button_step_player[6] = {0,0,0,0,0,0};
 
@@ -144,10 +144,10 @@ void main()
 
 		if(step == 3)
 		{
-			if(INPUT_P23 == 1)
+			if(INPUT_P23 == 0)
 			{
 				delay_ms(50);
-				if(INPUT_P23 == 1)
+				if(INPUT_P23 == 0)
 				{
 					step = 4;
 					OUTPUT_11 = 1; //打开推杆
@@ -161,7 +161,7 @@ void main()
 int PLAY_6_BTN()
 {
   	int i ;
-//	GET_ARRAY_LEN(buttonStep , totalLength);	
+	GET_ARRAY_LEN(buttonStep , totalLength);	
 	if(INPUT_44 == 0)
 	{
 		delay_ms(50);
@@ -241,7 +241,7 @@ int PLAY_6_BTN()
 			if((button_step_player[i] != buttonStep[i]))
 			{
 				btnStep = 0; //有错误 玩家步骤清0 重新来 
-				memset(button_step_player,0,6);
+				memset(button_step_player,0,totalLength);
 				OUTPUT_42 = 0;
 				delay_ms(2000);
 				OUTPUT_42 = 1;
@@ -249,8 +249,6 @@ int PLAY_6_BTN()
 			}
 		}
 		//按对了
-	    OUTPUT_42 = 0;
-		play_mp3(0,8);
 		return 1;
 	} 
 	return 0;
