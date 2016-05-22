@@ -6,9 +6,11 @@
 
 //接水管 电磁锁
 sbit OUTPUT_07 = P0^7;
+//接通水管 按钮通电
+sbit OUTPUT_42 = P4^2;
 //正反接推杆
-sbit OUTPUT_21 = P2^1; //初始化 高电平
-sbit OUTPUT_22 = P2^2;
+sbit OUTPUT_10 = P1^0; //初始化 高电平
+sbit OUTPUT_11 = P1^1;
 
 //水管外接到内部
 sbit INPUT_06 = P0^6;
@@ -27,18 +29,25 @@ sbit INPUT_P23 = P2^3;
 sbit INPUT_44 = P4^4;
 sbit INPUT_45 = P4^5;
 sbit INPUT_41 = P4^1;
-sbit INPUT_46 = P4^6;
-sbit INPUT_42 = P4^2;
-sbit INPUT_10 = P1^0;
 
+sbit INPUT_24 = P2^4;
+sbit INPUT_25 = P2^5;
+sbit INPUT_26 = P2^6;
 
 //当前的步骤 没有参与过 = 0
-signed char step = 0;
+unsigned char step = 0;
+
+unsigned char step_1_flag_1 = 0;
+unsigned char step_1_flag_2 = 0;
+unsigned char step_1_flag_3 = 0;
+unsigned char step_1_flag_4 = 0;
+unsigned char step_1_flag_5 = 0;
+unsigned char step_1_flag_6 = 0;
 
 int btnStep = 0;//玩家按到第几个 
-int totalLength;//按钮 总步骤
-char code buttonStep[] = {1,2,3,4,5,6};
-char button_step_player[] = {0};
+int totalLength = 6;//按钮 总步骤
+unsigned char code buttonStep[6] = {4,5,5,6,6,6};
+unsigned char button_step_player[6] = {0,0,0,0,0,0};
 
 int PLAY_6_BTN();
 void INIT_COM();
@@ -56,27 +65,68 @@ void main()
 	{
 		if(step == 0)
 		{
-			if(INPUT_06 == 1)	//水管接通
+			if(INPUT_06 == 0)	//水管接通
 			{
-				delay_ms(50);
-				if(INPUT_06 == 1)
-				{
-					OUTPUT_07 = 0;
-					play_mp3(0,1);
-					step = 1;
-				}			
+				OUTPUT_07 = 0;
+				play_mp3(0,1);
+				step = 1;			
 			}	
 		}
-		if(step == 1)
+		if(step == 1)	 
 		{
-			if(INPUT_05 == 0 && INPUT_04 == 0 && INPUT_03 == 0 && INPUT_02 == 0 && INPUT_01 == 0 && INPUT_00 == 0)
+			if( (INPUT_05 == 0) && (step_1_flag_1 == 0))
 			{
 				delay_ms(50);
-				if(INPUT_05 == 0 && INPUT_04 == 0 && INPUT_03 == 0 && INPUT_02 == 0 && INPUT_01 == 0 && INPUT_00 == 0)
+				if( (INPUT_05 == 0) && (step_1_flag_1 == 0))
 				{
-					step = 2;  //6个门禁放对了
-					play_mp3(0,1);
+				step_1_flag_1 = 1;
 				}
+			}
+			if( (INPUT_04 == 0) && (step_1_flag_2 == 0))
+			{
+			 	delay_ms(50);
+				 if( (INPUT_04 == 0) && (step_1_flag_2 == 0))
+				{
+					step_1_flag_2 = 1;
+				}
+			}
+			if( (INPUT_03 == 0)	&& (step_1_flag_3 == 0))
+			{
+			 	delay_ms(50);	
+				if( (INPUT_03 == 0)	&& (step_1_flag_3 == 0))	
+				{	
+					step_1_flag_3 = 1;
+				}
+			}
+			if( (INPUT_02 == 0) && (step_1_flag_4 == 0))
+			{
+			 	delay_ms(50);
+				if( (INPUT_02 == 0) && (step_1_flag_4 == 0))	
+				{
+					step_1_flag_4 = 1;
+				}
+			}
+			if( (INPUT_01 == 0) && (step_1_flag_5 == 0))
+			{
+			 	delay_ms(50);
+				if( (INPUT_01 == 0) && (step_1_flag_5 == 0))
+				{
+					step_1_flag_5 = 1;
+				}
+			}
+			if( (INPUT_00 == 0)	&& (step_1_flag_6 == 0))
+			{
+				delay_ms(50);
+				if( (INPUT_00 == 0)	&& (step_1_flag_6 == 0))
+				{	
+					step_1_flag_6 = 1;
+				}
+			}
+			if((step == 1) && (step_1_flag_1 == 1 )&& (step_1_flag_2 == 1) && (step_1_flag_3 == 1) && (step_1_flag_4 == 1 )&& (step_1_flag_5 == 1) && (step_1_flag_6 == 1))
+			{			
+				step = 2;  //6个门禁放对了
+				OUTPUT_42 = 1;
+				play_mp3(0,1);
 			}
 		}
 		if(step == 2)  //按6个按钮
@@ -84,7 +134,10 @@ void main()
 			if(PLAY_6_BTN() == 1)	 //按对了
 			{
 				step = 3;
-				OUTPUT_21 = 0;	 //打开推杆
+			
+				OUTPUT_42 = 0; //关闭按钮灯
+
+				OUTPUT_10 = 1;	 //打开推杆
 				play_mp3(0,9);
 			}
 		}
@@ -97,7 +150,7 @@ void main()
 				if(INPUT_P23 == 1)
 				{
 					step = 4;
-					OUTPUT_22 = 0; //打开推杆
+					OUTPUT_11 = 1; //打开推杆
 					play_mp3(0,10);
 				}
 			} 
@@ -107,24 +160,24 @@ void main()
 
 int PLAY_6_BTN()
 {
-  	int i;
-	GET_ARRAY_LEN(buttonStep , totalLength);	
-	if(INPUT_44 == 1)
+  	int i ;
+//	GET_ARRAY_LEN(buttonStep , totalLength);	
+	if(INPUT_44 == 0)
 	{
 		delay_ms(50);
-		if(INPUT_44 == 1)
+		if(INPUT_44 == 0)
 		{
-			while(INPUT_44 == 0); //松开 
+			while(INPUT_44 == 0); //松开
 			button_step_player[btnStep] =  1;
 			btnStep ++;
 			play_mp3(0,2);
 		}
 	}
 	
-	if(INPUT_45 == 1)
+	if(INPUT_45 == 0)
 	{
 		delay_ms(50);
-		if(INPUT_45 == 1)
+		if(INPUT_45 == 0)
 		{
 			while(INPUT_45 == 0); //松开 
 			button_step_player[btnStep] =  2;
@@ -133,10 +186,10 @@ int PLAY_6_BTN()
 		}
 	}
 	
-	if(INPUT_41 == 1)
+	if(INPUT_41 == 0)
 	{
 		delay_ms(50);
-		if(INPUT_41 == 1)
+		if(INPUT_41 == 0)
 		{
 			while(INPUT_41 == 0); //松开 
 			button_step_player[btnStep] =  3;
@@ -144,37 +197,37 @@ int PLAY_6_BTN()
 			play_mp3(0,4);
 		}
 	}
-	
-	if(INPUT_46 == 1)
+
+	if(INPUT_24 == 0)
 	{
 		delay_ms(50);
-		if(INPUT_46 == 1)
+		if(INPUT_24 == 0)
 		{
-			while(INPUT_46 == 0); //松开 			
+			while(INPUT_24 == 0); //松开
 			button_step_player[btnStep] =  4;			
 		   	btnStep ++;
 			play_mp3(0,5);
 		}
 	}
 
-	if(INPUT_42 == 1)
+	if(INPUT_25 == 0)
 	{
 		delay_ms(50);
-		if(INPUT_42 == 1)
+		if(INPUT_25 == 0)
 		{
-			while(INPUT_42 == 0); //松开 			
+			while(INPUT_25 == 0); //松开 			
 			button_step_player[btnStep] =  5;			
 			btnStep ++;
 			play_mp3(0,6);
 		}
 	}
 
-	if(INPUT_10 == 1)
+	if(INPUT_26 == 0)
 	{
 		delay_ms(50);
-		if(INPUT_10 == 1)
+		if(INPUT_26 == 0)
 		{
-			while(INPUT_10 == 0); //松开 
+			while(INPUT_26 == 0); //松开 
 			button_step_player[btnStep] =  6;			
 			btnStep ++;
 			play_mp3(0,7);
@@ -185,12 +238,18 @@ int PLAY_6_BTN()
 	{
 		for(i = 0 ; i < totalLength ; i++)
 		{
-			if(button_step_player[i] != buttonStep[i])
+			if((button_step_player[i] != buttonStep[i]))
 			{
 				btnStep = 0; //有错误 玩家步骤清0 重新来 
+				memset(button_step_player,0,6);
+				OUTPUT_42 = 0;
+				delay_ms(2000);
+				OUTPUT_42 = 1;
 				return 0;
 			}
 		}
+		//按对了
+	    OUTPUT_42 = 0;
 		play_mp3(0,8);
 		return 1;
 	} 
@@ -202,14 +261,16 @@ int PLAY_6_BTN()
 //初始化所有口
 void INIT_COM()
 {
-	INPUT_06 = 0;
+	INPUT_06 = 1;
 
 	//推杆
-	OUTPUT_21 = 1;
-	OUTPUT_22 = 1;
+	OUTPUT_10 = 0;
+	OUTPUT_11 = 0;
 
 	//接水管 输出电磁锁
 	OUTPUT_07 = 1;
+	//接通水管 按钮通电
+	OUTPUT_42 = 0;
 
 	//6个门禁 默认门禁打开
 	INPUT_05 = 1;
@@ -220,12 +281,12 @@ void INIT_COM()
 	INPUT_00 = 1;
 
 	//6个按钮
-	INPUT_44 = 0;
-	INPUT_45 = 0;
-	INPUT_41 = 0;
-	INPUT_46 = 0;
-	INPUT_42 = 0;
-	INPUT_10 = 0;
+	INPUT_44 = 1;
+	INPUT_45 = 1;
+	INPUT_41 = 1;
+	INPUT_26 = 1;
+	INPUT_24 = 1;
+	INPUT_25 = 1;
 	
 	//霍尔开关 
 	INPUT_P23 = 1;
