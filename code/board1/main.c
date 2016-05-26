@@ -5,12 +5,13 @@
 #include "mp3.h"
 
 //接水管 电磁锁
-sbit OUTPUT_07 = P0^7;
+sbit OUTPUT_12 = P1^2;
 //接通水管 按钮通电
 sbit OUTPUT_42 = P4^2;
 //正反接推杆
 sbit OUTPUT_10 = P1^0; //初始化 高电平
 sbit OUTPUT_11 = P1^1;
+
 
 //水管外接到内部
 sbit INPUT_06 = P0^6;
@@ -67,7 +68,7 @@ void main()
 		{
 			if(INPUT_06 == 0)	//水管接通
 			{
-				OUTPUT_07 = 0;
+				OUTPUT_12 = 0;
 				play_mp3(0,1);
 				step = 1;			
 			}	
@@ -266,7 +267,7 @@ void INIT_COM()
 	OUTPUT_11 = 0;
 
 	//接水管 输出电磁锁
-	OUTPUT_07 = 1;
+	OUTPUT_12 = 1;
 	//接通水管 按钮通电
 	OUTPUT_42 = 0;
 
