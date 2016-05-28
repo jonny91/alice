@@ -3,6 +3,7 @@
 #include "uart.h"
 #include "mp3.h"
 
+sbit p02 = P0^2;
 sbit p05 = P0^5;
 sbit p06 = P0^6;
 sbit p07 = P0^7;
@@ -16,37 +17,23 @@ sbit p15 = P1^ 5;
 sbit p16 = P1^ 6;
 sbit p17 = P1^ 7;
 
+sbit p20 = P2^0;
+sbit p40 = P4^0;
 sbit p42 = P4^2;
 sbit p44 = P4^4;
-
+sbit p27 = P2^7;
 
 void main()
 {
 	sys_init();
-	p05 = 0;	    //button
+//	INIT_COM();
 
-	p10 = 1;
-	p11 = 0;
-	p12 = 0;
-	p13 = 0;						
-	p16 = 0;
-	p14 = 0;
+	uart_init();
+	mp3_init();
 
-	p44 = 0;	p15 = 0;
-	p17 = 0;															   																
-
-	p42 = 1;   
- 	p07 = 1;
-
+		play_mp3(0,1);
 	while(1)
 	{
-		if(p05 == 1)
-		{
-			delay_ms(50);
-			if(p05 == 1)
-			{
-			//	p10 = 0;
-			}	
-		}  
+		p05 = 1;
 	}
 }
