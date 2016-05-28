@@ -22,12 +22,12 @@ sbit INPUT_01 = P0^1;
 sbit INPUT_00 = P0^0;
 
 //霍尔开关串联输入
-sbit INPUT_P23 = P2^3; 
+sbit INPUT_P23 = P2^3;
 
 //6个按钮
-sbit INPUT_44 = P4^4;
-sbit INPUT_46 = P4^6;
-sbit INPUT_41 = P4^1;
+sbit INPUT_14 = P1^4;
+sbit INPUT_13 = P1^3;
+sbit INPUT_07 = P0^7;
 
 sbit INPUT_24 = P2^4;
 sbit INPUT_25 = P2^5;
@@ -46,7 +46,7 @@ unsigned char step_1_flag_6 = 0;
 unsigned char btnTime = 0;//第几轮按钮
 int btnStep = 0;//玩家按到第几个
 int totalLength;//按钮 总步骤
-unsigned char code buttonStep[2][6] = {{1,2,2,3,3,3},{1,1,1,2,2,3}};
+unsigned char code buttonStep[2][6] = {{1,2,3,4,5,6},{1,2,3,4,5,6}};
 unsigned char button_step_player[2][6] = {{0,0,0,0,0,0},{0,0,0,0,0,0}};
 
 int PLAY_6_BTN();
@@ -132,16 +132,16 @@ void main()
 					play_mp3(0,6);
 				}
 			}
-			if((step_1_flag_1 == 1 )&&(step_1_flag_2 == 1)&&(step_1_flag_3 == 1)&&(step_1_flag_4 == 1 )&&(step_1_flag_5 == 1) && (step_1_flag_6 == 1))
+			if((step_1_flag_1==1)&&(step_1_flag_2 == 1)&&(step_1_flag_3 == 1)&&(step_1_flag_4==1)&&(step_1_flag_5==1)&&(step_1_flag_6==1))
 			{			
 				step = 2;  //6个门禁放对了
-				OUTPUT_42 = 1;
-			
+				OUTPUT_42 = 1;			
 				play_mp3(0,7);
 			}
 		}
-		else if(step == 2)  //按6个按钮
+		else if(step==2)  //按6个按钮
 		{
+			delay_ms(50);
 			if(PLAY_6_BTN() == 1)	 //按对了
 			{
 				btnTime = 1;
@@ -186,38 +186,38 @@ int PLAY_6_BTN()
 {
   	int i ;
 	GET_ARRAY_LEN(buttonStep[btnTime] , totalLength);	
-	if(INPUT_44 == 0)
+	if(INPUT_14 == 0)
 	{
 		delay_ms(50);
-		if(INPUT_44 == 0)
+		if(INPUT_14 == 0)
 		{
-			while(INPUT_44 == 0); //松开
-			button_step_player[btnTime][btnStep] =  6;
-			btnStep ++;
-			play_mp3(0,2);
+			while(INPUT_14==0); //松开
+			button_step_player[btnTime][btnStep] = 6;
+			btnStep++;
+			play_mp3(0,6);
 		}
 	}
 	
-	if(INPUT_46 == 0)
+	if(INPUT_13 == 0)
 	{
 		delay_ms(50);
-		if(INPUT_46 == 0)
+		if(INPUT_13 == 0)
 		{
-			while(INPUT_46 == 0); //松开 
+			while(INPUT_13==0); //松开 
 			button_step_player[btnTime][btnStep] =  5;
-	   		btnStep ++;
-   			play_mp3(0,3);
+	   		btnStep++;
+   			play_mp3(0,5);
 		}
 	}
 	
-	if(INPUT_41 == 0)
+	if(INPUT_07 == 0)
 	{
 		delay_ms(50);
-		if(INPUT_41 == 0)
+		if(INPUT_07 == 0)
 		{
-			while(INPUT_41 == 0); //松开 
+			while(INPUT_07==0); //松开 
 			button_step_player[btnTime][btnStep] =  4;
-		   	btnStep ++;
+		   	btnStep++;
 			play_mp3(0,4);
 		}
 	}
@@ -227,10 +227,10 @@ int PLAY_6_BTN()
 		delay_ms(50);
 		if(INPUT_24 == 0)
 		{
-			while(INPUT_24 == 0); //松开
+			while(INPUT_24==0); //松开
 			button_step_player[btnTime][btnStep] =  1;			
-		   	btnStep ++;
-			play_mp3(0,5);
+		   	btnStep++;
+			play_mp3(0,1);
 		}
 	}
 
@@ -241,8 +241,8 @@ int PLAY_6_BTN()
 		{
 			while(INPUT_25 == 0); //松开 			
 			button_step_player[btnTime][btnStep] = 2;			
-			btnStep ++;
-			play_mp3(0,6);
+			btnStep++;
+			play_mp3(0,2);
 		}
 	}
 
@@ -254,7 +254,7 @@ int PLAY_6_BTN()
 			while(INPUT_26 == 0); //松开 
 			button_step_player[btnTime][btnStep] = 3;			
 			btnStep ++;
-			play_mp3(0,7);
+			play_mp3(0,3);
 		}
 	}
 
@@ -266,13 +266,13 @@ int PLAY_6_BTN()
 			{
 				btnStep = 0; //有错误 玩家步骤清0 重新来 
 				memset(button_step_player[btnTime],0,totalLength);
-				OUTPUT_42 = 0;
-				delay_ms(500);
-				OUTPUT_42 = 1;
+			
+				play_mp3(0,1);
 				return 0;
 			}
 		}
 		//按对了
+		play_mp3(0,2);
 		return 1;
 	} 
 	return 0;
@@ -302,9 +302,9 @@ void INIT_COM()
 	INPUT_00 = 1;
 
 	//6个按钮
-	INPUT_44 = 1;
-	INPUT_46 = 1;
-	INPUT_41 = 1;
+	INPUT_14 = 1;
+	INPUT_13 = 1;
+	INPUT_07 = 1;
 	INPUT_26 = 1;
 	INPUT_24 = 1;
 	INPUT_25 = 1;
