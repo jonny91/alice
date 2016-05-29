@@ -25,7 +25,7 @@ sbit OUTPUT_17 = P1^7;
 char step = 0;
 void INIT_COM();
 
-char message[] = {0,0,0,0};
+char message[4] = {0,0,0,0};
 char i = 0;
 
 char step1_0 = 0;
