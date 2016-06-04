@@ -6,6 +6,7 @@
 
 //接通水管 按钮通电
 sbit OUTPUT_42 = P4^2;
+
 //正反接推杆
 sbit OUTPUT_10 = P1^0; //初始化 高电平
 sbit OUTPUT_11 = P1^1;
@@ -13,6 +14,8 @@ sbit OUTPUT_12 = P1^2;
 
 //水管外接到内部
 sbit INPUT_06 = P0^6;
+sbit INPUT_15 = P1^5;
+
 //6个门禁
 sbit INPUT_05 = P0^5;
 sbit INPUT_04 = P0^4;
@@ -68,10 +71,10 @@ void main()
 	{
 		if(step == 0)
 		{
-			if(INPUT_06 == 0)	//水管接通
+			if((INPUT_06 == 0) && (INPUT_15 == 0))	//水管接通
 			{
 				delay_ms(50);
-				if(INPUT_06 == 0)	//水管接通
+				if((INPUT_06 == 0) && (INPUT_15 == 0))	//水管接通
 				{
 					OUTPUT_12 = 1;  //电磁锁打开
 			  		play_mp3(0,2);
@@ -310,6 +313,7 @@ int PLAY_6_BTN()
 void INIT_COM()
 {
 	INPUT_06 = 1;
+	INPUT_15 = 1;
 
 	//推杆
 	OUTPUT_10 = 0;
