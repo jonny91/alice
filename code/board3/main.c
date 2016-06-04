@@ -2,6 +2,7 @@
 #include <string.h>
 #include <common.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "uart.h"
 #include "mp3.h"
 
@@ -46,27 +47,28 @@ char step = 0;
 //RGB RED:100b = 4	
 unsigned char color[8] = {0,1,2,3,4,5,6,7}; //8种颜色
 //初始化都灭
-int color_step_0 = -1;
-int color_step_1 = -1;
-int color_step_2 = -1;
-int color_step_3 = -1;
+int color_step_0 = 4;
+int color_step_1 = 4;
+int color_step_2 = 4;
+int color_step_3 = 4;
 
 void light(char lightNumber , char color);
 void INIT_COM();
 void main()
-{
+{        
 	sys_init();
 	INIT_COM();
 
 	uart_init();
 	mp3_init();
-			
-	play_mp3(0,1);
 
-	color_step_0 = rand()%8;
-	color_step_1 = rand()%8;
-	color_step_2 = rand()%8;
-	color_step_3 = rand()%8;
+	while((color_step_0 == 4)&&( color_step_1 == 4)&&( color_step_2 == 4)&&( color_step_3 == 4))
+	{
+		color_step_0 = rand()%8;
+		color_step_1 = rand()%8;
+		color_step_2 = rand()%8;
+		color_step_3 = rand()%8;	
+	}
 	
 	light(0,color[color_step_0]);
 	light(1,color[color_step_1]);
@@ -87,8 +89,6 @@ void main()
 					color_step_1 = (color_step_1)%8;
 					light(0,color_step_0);
 					light(1,color_step_1);
-
-					play_mp3(0,5);
 
 					delay_ms(50);
 				}
@@ -130,8 +130,6 @@ void main()
 					light(2,color_step_2);									
 					light(3,color_step_3);
 
-					play_mp3(0,5);
-
 					delay_ms(50);
 				}
 			} 
@@ -148,8 +146,6 @@ void main()
 					light(2,color_step_2);									
 					light(3,color_step_3);
 
-					play_mp3(0,5);
-
 					delay_ms(50);
 				}
 			}
@@ -165,7 +161,7 @@ void main()
 				step = 1;
 				OUTPUT_21 = 0 ;//打开电磁锁 
 
-				play_mp3(0,7);
+				play_mp3(0,1); //玫瑰完成 +　馅饼开门提示
 			}
 		}
 		
@@ -178,6 +174,7 @@ void main()
 				{
 					step = 2; 
 					OUTPUT_22 = 0;//最后一个门 
+					play_mp3(0,2);		
 				} 
 			} 
 		} 

@@ -91,7 +91,7 @@ void main()
 				if(INPUT_05==0)
 				{
 					step_1_flag_1 = 1;
-					play_mp3(0,3);
+					play_mp3(0,3);				 //狗
 				}
 			}
 			if( (INPUT_04 == 0) && (step_1_flag_2 == 0))
@@ -100,7 +100,7 @@ void main()
 				 if(INPUT_04 == 0)
 				{
 					step_1_flag_2 = 1;
-					play_mp3(0,4);
+					play_mp3(0,4);		 //兔子
 				}
 			}
 			if( (INPUT_03 == 0)	&& (step_1_flag_3 == 0))
@@ -109,7 +109,7 @@ void main()
 				if(INPUT_03 == 0)	
 				{	
 					step_1_flag_3 = 1;
-					play_mp3(0,5);
+					play_mp3(0,5);	 //老鼠
 				}
 			}
 			if( (INPUT_02 == 0) && (step_1_flag_4 == 0))
@@ -118,7 +118,7 @@ void main()
 				if(INPUT_02 == 0)	
 				{
 					step_1_flag_4 = 1;
-					play_mp3(0,6);
+					play_mp3(0,6);		 //松鼠
 				}
 			}
 			if((INPUT_01 == 0)&&(step_1_flag_5 == 0))
@@ -127,7 +127,7 @@ void main()
 				if(INPUT_01 == 0)
 				{
 					step_1_flag_5 = 1;
-					play_mp3(0,7);
+					play_mp3(0,7);	  //猫
 				}
 			}
 			if( (INPUT_00 == 0)	&& (step_1_flag_6 == 0))
@@ -136,14 +136,15 @@ void main()
 				if(INPUT_00 == 0)
 				{	
 					step_1_flag_6 = 1;
-					play_mp3(0,8);
+					play_mp3(0,8);		 //刺猬
 				}
 			}
 			if((step_1_flag_1==1)&&(step_1_flag_2 == 1)&&(step_1_flag_3 == 1)&&(step_1_flag_4==1)&&(step_1_flag_5==1)&&(step_1_flag_6==1))
 			{			
 				step = 2;  //6个门禁放对了
-				OUTPUT_42 = 1;			
-				play_mp3(0,9);
+				OUTPUT_42 = 1;
+				delay_ms(5000);			
+				play_mp3(0,9); //全部摆对
 			}
 		}
 		else if(step==2)  //按6个按钮
@@ -182,7 +183,8 @@ void main()
 				OUTPUT_42 = 0; //关闭按钮灯
 
 				OUTPUT_10 = 1;	 //打开推杆
-				play_mp3(0,17);
+				delay_ms(5000);
+				play_mp3(0,17); //全部正确 + 吃饼干提示
 
 				step = 6;
 			}
@@ -197,7 +199,8 @@ void main()
 				{
 					step = 7;
 					OUTPUT_11 = 1; //打开推杆
-					play_mp3(0,18);
+					delay_ms(2000);
+					play_mp3(0,18);		  //吃饼干全部正确 + 背景音乐 + 找扇子提示
 				}
 			} 
 		}
