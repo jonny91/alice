@@ -48,11 +48,12 @@ unsigned char step_1_flag_6 = 0;
 
 unsigned char btnTime = 0;//第几轮按钮
 int btnStep = 0;//玩家按到第几个
-int totalLength;//按钮 总步骤
-unsigned char code buttonStep[4][6] = {{1,2,3,4,5,6},{1,2,3,4,5,6},{1,2,3,4,5,6},{1,2,3,4,5,6}};
+
+//狗 兔子 老鼠 松鼠 猫 刺猬
+unsigned char code buttonStep[4][6] = {{1,3,1,4,5,2},{1,6,2,5,3,4},{4,6,2,5,2,3},{5,2,3,4,5,3}};
 unsigned char button_step_player[4][6] = {{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0}};
 
-int PLAY_6_BTN();
+int PLAY_6_BTN(char count);
 void INIT_COM();
 
 
@@ -64,8 +65,8 @@ void main()
 	mp3_init();
 
 	//开机延迟 放背景音乐
-	delay_ms(10000);
-	play_mp3(0,1);
+	delay_ms(4000);
+	play_mp3(0,0x01);
 	
 	while(1)
 	{
@@ -77,7 +78,8 @@ void main()
 				if((INPUT_06 == 0) && (INPUT_15 == 0))	//水管接通
 				{
 					OUTPUT_12 = 1;  //电磁锁打开
-			  		play_mp3(0,2);
+					delay_ms(100);
+			  		play_mp3(0,0x02);
 					step = 1;		
 				}
 			}	
@@ -91,7 +93,7 @@ void main()
 				if(INPUT_05==0)
 				{
 					step_1_flag_1 = 1;
-					play_mp3(0,3);				 //狗
+					play_mp3(0,0x04);
 				}
 			}
 			if( (INPUT_04 == 0) && (step_1_flag_2 == 0))
@@ -100,7 +102,7 @@ void main()
 				 if(INPUT_04 == 0)
 				{
 					step_1_flag_2 = 1;
-					play_mp3(0,4);		 //兔子
+					play_mp3(0,0x05);
 				}
 			}
 			if( (INPUT_03 == 0)	&& (step_1_flag_3 == 0))
@@ -109,7 +111,7 @@ void main()
 				if(INPUT_03 == 0)	
 				{	
 					step_1_flag_3 = 1;
-					play_mp3(0,5);	 //老鼠
+					play_mp3(0,0x03);
 				}
 			}
 			if( (INPUT_02 == 0) && (step_1_flag_4 == 0))
@@ -118,7 +120,7 @@ void main()
 				if(INPUT_02 == 0)	
 				{
 					step_1_flag_4 = 1;
-					play_mp3(0,6);		 //松鼠
+					play_mp3(0,0x07);
 				}
 			}
 			if((INPUT_01 == 0)&&(step_1_flag_5 == 0))
@@ -127,7 +129,7 @@ void main()
 				if(INPUT_01 == 0)
 				{
 					step_1_flag_5 = 1;
-					play_mp3(0,7);	  //猫
+					play_mp3(0,0x06);
 				}
 			}
 			if( (INPUT_00 == 0)	&& (step_1_flag_6 == 0))
@@ -136,7 +138,7 @@ void main()
 				if(INPUT_00 == 0)
 				{	
 					step_1_flag_6 = 1;
-					play_mp3(0,8);		 //刺猬
+					play_mp3(0,0x08);
 				}
 			}
 			if((step_1_flag_1==1)&&(step_1_flag_2 == 1)&&(step_1_flag_3 == 1)&&(step_1_flag_4==1)&&(step_1_flag_5==1)&&(step_1_flag_6==1))
@@ -144,47 +146,49 @@ void main()
 				step = 2;  //6个门禁放对了
 				OUTPUT_42 = 1;
 				delay_ms(5000);			
-				play_mp3(0,9); //全部摆对
+				play_mp3(0,0x09); //全部摆对
 			}
 		}
 		else if(step==2)  //按6个按钮
 		{
+			btnTime = 0;
 			delay_ms(50);
-			if(PLAY_6_BTN() == 1)	 //按对了
+			if(PLAY_6_BTN(6) == 1)	 //按对了
 			{
-				btnTime = 1;
-	
-				play_mp3(0,10);
+				play_mp3(0,0x0a);
 				step = 3;			
 			}
 		}
 
 		else if(step == 3)
 		{
-			if(PLAY_6_BTN() == 1)
+			btnTime = 1;
+			if(PLAY_6_BTN(6) == 1)
 			{		
-				play_mp3(0,11);	  //第四局提示
+				play_mp3(0,0x0b);	  //第四局提示
 				step = 4;
 			}	
 		}
 
 		else if(step == 4)
 		{
-			if(PLAY_6_BTN() == 1)
+			btnTime = 2;
+			if(PLAY_6_BTN(6) == 1)
 			{
-				play_mp3(0,12);
+				play_mp3(0,0x0c);
 				step = 5;
 			}
 		}
 		else if(step == 5)
 		{
-			if(PLAY_6_BTN() == 1)
+			btnTime = 3;
+			if(PLAY_6_BTN(6) == 1)
 			{
 				OUTPUT_42 = 0; //关闭按钮灯
 
 				OUTPUT_10 = 1;	 //打开推杆
 				delay_ms(5000);
-				play_mp3(0,17); //全部正确 + 吃饼干提示
+				play_mp3(0,0x11); //全部正确 + 吃饼干提示
 
 				step = 6;
 			}
@@ -200,17 +204,16 @@ void main()
 					step = 7;
 					OUTPUT_11 = 1; //打开推杆
 					delay_ms(2000);
-					play_mp3(0,18);		  //吃饼干全部正确 + 背景音乐 + 找扇子提示
+					play_mp3(0,0x12);		  //吃饼干全部正确 + 背景音乐 + 找扇子提示
 				}
 			} 
 		}
 	}
 }
 
-int PLAY_6_BTN()
+int PLAY_6_BTN(char totalLength)
 {
   	int i ;
-	GET_ARRAY_LEN(buttonStep[btnTime] , totalLength);	
 	if(INPUT_14 == 0)
 	{
 		delay_ms(50);
@@ -220,9 +223,8 @@ int PLAY_6_BTN()
 			button_step_player[btnTime][btnStep] = 6;
 			btnStep++;
 		}
-	}
-	
-	if(INPUT_13 == 0)
+	}	
+	else if(INPUT_13 == 0)
 	{
 		delay_ms(50);
 		if(INPUT_13 == 0)
@@ -231,9 +233,8 @@ int PLAY_6_BTN()
 			button_step_player[btnTime][btnStep] =  5;
 	   		btnStep++;
 		}
-	}
-	
-	if(INPUT_07 == 0)
+	}	
+	else if(INPUT_07 == 0)
 	{
 		delay_ms(50);
 		if(INPUT_07 == 0)
@@ -243,8 +244,7 @@ int PLAY_6_BTN()
 		   	btnStep++;
 		}
 	}
-
-	if(INPUT_24 == 0)
+	else if(INPUT_24 == 0)
 	{
 		delay_ms(50);
 		if(INPUT_24 == 0)
@@ -254,8 +254,7 @@ int PLAY_6_BTN()
 		   	btnStep++;
 		}
 	}
-
-	if(INPUT_25 == 0)
+	else if(INPUT_25 == 0)
 	{
 		delay_ms(50);
 		if(INPUT_25 == 0)
@@ -265,8 +264,7 @@ int PLAY_6_BTN()
 			btnStep++;
 		}
 	}
-
-	if(INPUT_26 == 0)
+	else if(INPUT_26 == 0)
 	{
 		delay_ms(50);
 		if(INPUT_26 == 0)
@@ -283,28 +281,33 @@ int PLAY_6_BTN()
 		{
 			if((button_step_player[btnTime][i] != buttonStep[btnTime][i]))
 			{
-				btnStep = 0; //有错误 玩家步骤清0 重新来 
-				memset(button_step_player[btnTime],0,totalLength);
+				btnStep = 0; //有错误 玩家步骤清0 重新来 			
 			
 				if(btnTime == 0)
 				{
-					play_mp3(0,13);
+					memset(button_step_player[btnTime],0,6);
+					play_mp3(0,0x0d);
 				}
 				else if(btnTime == 1)
 				{
-					play_mp3(0,14);
+					memset(button_step_player[btnTime],0,6);
+					play_mp3(0,0x0e);
 				}
 				else if(btnTime == 2)
 				{
-					play_mp3(0,15);
+					memset(button_step_player[btnTime],0,6);
+					play_mp3(0,0x0f);
 				}
 				else if(btnTime == 3)
 				{
-					play_mp3(0,16);
+					memset(button_step_player[btnTime],0,6);
+					play_mp3(0,0x10);
 				}
 				return 0;
 			}
 		}
+
+		btnStep = 0;
 		return 1;
 	} 
 	return 0;

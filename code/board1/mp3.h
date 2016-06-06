@@ -4,7 +4,7 @@
 /* MP3操作指令                                           */
 /*                                                       */
 /*********************************************************/
-void play_mp3(unsigned char floder , unsigned char music)
+void play_mp3(unsigned int floder , unsigned int music)
 {
 	send(0X7E);//指令开始位
 	send(0x04);
