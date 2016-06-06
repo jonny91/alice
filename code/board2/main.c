@@ -32,14 +32,14 @@ char step1_0 = 0;
 char step1_1 = 0; //两个门禁
 char step1_2 = 0;//接电线
 
+char isPlayStep1_3_MUSIC = 0; //是不是播放了接电线的提示
+
 void main()
 {
 	sys_init();
 	INIT_COM();
 	uart_init();
 	mp3_init();
-	
-	play_mp3(0,1);
 
 	while(1)
 	{
@@ -51,7 +51,7 @@ void main()
 				if( (step1_0 == 0) && (INPUT_40 == 0))
 				{
 					step1_0 = 1;
-					play_mp3(0,1);
+					play_mp3(0,1);	 //扇子
 				}
 			}
 
@@ -61,8 +61,15 @@ void main()
 				if( (step1_1 == 0) && (INPUT_20 == 0))
 				{
 					step1_1 = 1;
-					play_mp3(0,2);
+					play_mp3(0,2);	   //手套
 				}
+			}
+
+			if((step1_1 == 1)&&(step1_0 == 1) && (isPlayStep1_3_MUSIC == 0) && (step1_2 == 0) )
+			{
+				isPlayStep1_3_MUSIC = 1;
+				delay_ms(5000);
+				play_mp3(0,3); //接电线提示
 			}
 
 			if((step1_2 == 0)&&(INPUT_21 == 0))
@@ -70,16 +77,17 @@ void main()
 				delay_ms(50);
 				if((step1_2 == 0)&&(INPUT_21 == 0))
 				{
-					step1_2 = 1;
-					play_mp3(0,3);
+					step1_2 = 1;   //接电线完成
+					isPlayStep1_3_MUSIC = 1;
 				}
 			}
 
 			if((step1_0 == 1)&&(step1_1 == 1)&&(step1_2==1))
 			{
 				OUTPUT_43 = 0;
+				delay_ms(6000);
+				play_mp3(0,4); //接电线完成	+ 信箱提示
 				step = 1;
-				play_mp3(0,4);
 			}
 		}
 		
@@ -89,22 +97,18 @@ void main()
 			if(INPUT_44 == 0)
 			{
 				message[0] = 1;
-				play_mp3(0,1);
 			}
 			if(INPUT_45 == 0)
 			{
 				message[1] = 1;
-				play_mp3(0,2);
 			}
 			if(INPUT_01 == 0)
 			{
 				message[2] = 1;
-				play_mp3(0,3);
 			}
 			if(INPUT_02 == 0)
 			{
 				message[3] = 1;
-				play_mp3(0,4);
 			}
 
 
@@ -112,7 +116,7 @@ void main()
 			{
 				 step = 2;		 //信封完成
 				 OUTPUT_17 = 0;
-				 play_mp3(0,5);
+				 play_mp3(0,5);	//全部摆对信封 + 玫瑰提示
 			}
 		} 
 	} 
