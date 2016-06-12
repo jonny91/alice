@@ -1,4 +1,4 @@
-
+ void mp3(unsigned char comd);
 /*********************************************************/
 /*                                                       */
 /* MP3操作指令                                           */
@@ -6,6 +6,7 @@
 /*********************************************************/
 void play_mp3(unsigned char floder , unsigned char music)
 {
+	mp3(0X33);
 	send(0X7E);//指令开始位
 	send(0x04);
  	send(0X41);//指定文件夹播放
@@ -65,22 +66,7 @@ void mp3(unsigned char comd)
 		case 0X33: send(0X7E);//指令开始位
 				   send(0X03);//说明指令长度
 				   send(0X33);//设置循环模式
-				   send(0X01);//文件夹循环
-				   send(0XEF);//指令结束位 
-		   	       break;
-
-	    case 0X07: send(0X7E);//指令开始位
-				   send(0X04);//说明指令长度
-				   send(0X41);//指定文件夹播放
-				   send(0X00);//定位到名称为“01”的文件夹
-				   send(0x02);//播放第2个音频文件
-				   send(0XEF);//指令结束位 
-		   	       break;
-		case 0X08: send(0X7E);//指令开始位
-				   send(0X04);//说明指令长度
-				   send(0X41);//指定文件夹播放
-				   send(0X00);//定位到名称为“01”的文件夹
-				   send(0x03);//播放第3个音频文件
+				   send(0X04);//单曲播放
 				   send(0XEF);//指令结束位 
 		   	       break;
 	  }

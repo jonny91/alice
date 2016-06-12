@@ -13,6 +13,10 @@ sbit INPUT_45 = P4^5;
 sbit INPUT_01 = P0^1; 
 sbit INPUT_02 = P0^2; 
 
+//声音控制
+sbit INPUT_22 = P2^2;
+sbit OUTPUT_23 = P2^3;
+
 //接电线继电器
 sbit INPUT_21 = P2^1;
 
@@ -32,6 +36,8 @@ char step1_0 = 0;
 char step1_1 = 0; //两个门禁
 char step1_2 = 0;//接电线
 
+char is_stop_bgm = 0;
+
 char isPlayStep1_3_MUSIC = 0; //是不是播放了接电线的提示
 
 void main()
@@ -41,8 +47,20 @@ void main()
 	uart_init();
 	mp3_init();
 
+	delay_ms(1000);
+	play_mp3(0,6);
+
 	while(1)
 	{
+		if((INPUT_22 == 0)&&(is_stop_bgm == 0))
+		{
+			delay_ms(50);
+			if((INPUT_22 == 0)&&(is_stop_bgm == 0))
+			{
+				is_stop_bgm = 1;
+				play_mp3(0,7);	//打断  空音频
+			}
+		}
 		if(step == 0)
 		{
 			if( (step1_0 == 0) && (INPUT_40 == 0))
@@ -117,6 +135,7 @@ void main()
 				 step = 2;		 //信封完成
 				 OUTPUT_17 = 0;
 				 play_mp3(0,5);	//全部摆对信封 + 玫瑰提示
+				 OUTPUT_23 = 0;
 			}
 		} 
 	} 
@@ -137,4 +156,9 @@ void INIT_COM()
 	INPUT_02 = 1;
 
 	OUTPUT_17 = 1;
+
+	INPUT_22 = 1;
+	OUTPUT_23 = 1;
+
+	is_stop_bgm = 0;
 }

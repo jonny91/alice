@@ -36,6 +36,10 @@ sbit INPUT_24 = P2^4;
 sbit INPUT_25 = P2^5;
 sbit INPUT_26 = P2^6;
 
+//声音控制
+sbit OUTPUT_16 = P1^6;
+sbit INPUT_17 = P1^7;
+
 //当前的步骤 没有参与过 = 0
 unsigned char step = 0;
 
@@ -65,11 +69,22 @@ void main()
 	mp3_init();
 
 	//开机延迟 放背景音乐
-	delay_ms(4000);
+	delay_ms(1000);
 	play_mp3(0,0x01);
-	
+
 	while(1)
-	{
+	{	
+		if(INPUT_17 == 0)
+		{
+			delay_ms(50);
+			if(INPUT_17 == 0)
+			{
+				delay_ms(50);
+				//关闭声音
+				mp3(0x02);
+				INPUT_17 = 1;
+			}
+		}
 		if(step == 0)
 		{
 			if((INPUT_06 == 0) && (INPUT_15 == 0))	//水管接通
@@ -204,6 +219,8 @@ void main()
 					step = 7;
 					OUTPUT_11 = 1; //打开推杆
 					delay_ms(2000);
+					//游戏结束P1.6变低电平，播放018
+					OUTPUT_16 = 0;
 					play_mp3(0,0x12);		  //吃饼干全部正确 + 背景音乐 + 找扇子提示
 				}
 			} 
@@ -347,4 +364,8 @@ void INIT_COM()
 	
 	//霍尔开关 
 	INPUT_P23 = 1;
+			
+	//声音控制
+	OUTPUT_16 = 1;
+	INPUT_17 = 1;
 }
