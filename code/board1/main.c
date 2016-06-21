@@ -55,14 +55,11 @@ int btnStep = 0;//玩家按到第几个
 //狗 兔子 老鼠 松鼠 猫 刺猬
 unsigned char code btnStep_0[6] = {1,3,1,4,5,2};
 unsigned char code btnStep_1[6] = {1,6,2,5,3,4};
-unsigned char code btnStep_2[6] = {4,6,2,5,2,3};
-unsigned char code btnStep_3[6] = {5,2,3,4,5,3};
+unsigned char code btnStep_2[6] = {5,2,3,4,5,3};
 
 unsigned char playStep_0[6] = {0,0,0,0,0,0};
 unsigned char playStep_1[6] = {0,0,0,0,0,0};
 unsigned char playStep_2[6] = {0,0,0,0,0,0};
-unsigned char playStep_3[6] = {0,0,0,0,0,0};
-
 int i = 0;
 
 int PLAY_6_BTN(char count);
@@ -366,10 +363,11 @@ void main()
 				if(i == 6) 
 				{
 					OUTPUT_42 = 0;
-					play_mp3(0,0x0b);
+//				play_mp3(0,0x0b);
+					play_mp3(0,0x0c);
 					delay_ms(15000);
 					OUTPUT_42 = 1;
-					step = 4;	
+					step = 5;	
 				}
 				btnStep = 0;
 			}
@@ -482,7 +480,7 @@ void main()
 					if(INPUT_14 == 0)
 					{
 						while(INPUT_14==0); //松开
-						playStep_3[btnStep] = 6;
+						playStep_2[btnStep] = 6;
 						btnStep++;
 					}
 				}	
@@ -492,7 +490,7 @@ void main()
 					if(INPUT_13 == 0)
 					{
 						while(INPUT_13==0); //松开 
-						playStep_3[btnStep] =  5;
+						playStep_2[btnStep] =  5;
 				   		btnStep++;
 					}
 				}	
@@ -502,7 +500,7 @@ void main()
 					if(INPUT_07 == 0)
 					{
 						while(INPUT_07==0); //松开 
-						playStep_3[btnStep] =  4;
+						playStep_2[btnStep] =  4;
 					   	btnStep++;
 					}
 				}
@@ -512,7 +510,7 @@ void main()
 					if(INPUT_24 == 0)
 					{
 						while(INPUT_24==0); //松开
-						playStep_3[btnStep] =  1;			
+						playStep_2[btnStep] =  1;			
 					   	btnStep++;
 					}
 				}
@@ -522,7 +520,7 @@ void main()
 					if(INPUT_25 == 0)
 					{
 						while(INPUT_25 == 0); //松开 			
-						playStep_3[btnStep] = 2;			
+						playStep_2[btnStep] = 2;			
 						btnStep++;
 					}
 				}
@@ -532,7 +530,7 @@ void main()
 					if(INPUT_26 == 0)
 					{
 						while(INPUT_26 == 0); //松开 
-						playStep_3[btnStep] = 3;			
+						playStep_2[btnStep] = 3;			
 						btnStep ++;
 					}
 				}
@@ -541,7 +539,7 @@ void main()
 			{
 				for( i = 0 ; i < 6 ; i++)	
 				{
-					if(playStep_3[i] != btnStep_3[i])
+					if(playStep_2[i] != btnStep_2[i])
 					{
 						//错了
 						OUTPUT_42 = 0;
@@ -549,12 +547,12 @@ void main()
 						delay_ms(21000);
 						OUTPUT_42 = 1;
 						btnStep = 0;
-						playStep_3[0] = 0;
-						playStep_3[1] = 0;
-						playStep_3[2] = 0;
-						playStep_3[3] = 0;
-						playStep_3[4] = 0;
-						playStep_3[5] = 0;
+						playStep_2[0] = 0;
+						playStep_2[1] = 0;
+						playStep_2[2] = 0;
+						playStep_2[3] = 0;
+						playStep_2[4] = 0;
+						playStep_2[5] = 0;
 						break; 
 					}
 				}
