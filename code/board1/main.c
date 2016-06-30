@@ -171,7 +171,8 @@ void main()
   				send(0x00);//定位到名称为指定的文件夹
    				send(0x09);//播放第music个音频文件
 				send(0XEF);//指令结束位
-				delay_ms(19000);	
+				delay_ms(9000);	
+				delay_ms(9000);
 				OUTPUT_42 = 1;
 				step = 2;  //6个门禁放对了	
 			}
@@ -250,7 +251,7 @@ void main()
 						//错了
 						OUTPUT_42 = 0;
 						play_mp3(0,0x0d);
-						delay_ms(24000);
+						delay_ms(21000);
 						OUTPUT_42 = 1;
 						btnStep = 0;
 						playStep_0[0] = 0;
