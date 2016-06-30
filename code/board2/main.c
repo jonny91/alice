@@ -23,6 +23,9 @@ sbit INPUT_21 = P2^1;
 //信封 + 接电线 电磁锁开关
 sbit OUTPUT_43 = P4^3; 
 
+//扇子和手套放好后 变低电平
+sbit OUTPUT_24 = P2^4;
+
 //最后电磁锁
 sbit OUTPUT_17 = P1^7;
 
@@ -81,6 +84,11 @@ void main()
 					step1_1 = 1;
 					play_mp3(0,2);	   //手套
 				}
+			}
+			
+			if((step1_1 == 1)&&(step1_0 == 1)) //都放对了
+			{
+					OUTPUT_24 = 0; //电磁锁断电
 			}
 
 			if((step1_1 == 1)&&(step1_0 == 1) && (isPlayStep1_3_MUSIC == 0) && (step1_2 == 0) )
@@ -159,6 +167,7 @@ void INIT_COM()
 
 	INPUT_22 = 1;
 	OUTPUT_23 = 1;
+	OUTPUT_24 = 1;
 
 	is_stop_bgm = 0;
 }
