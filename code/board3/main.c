@@ -173,8 +173,12 @@ void main()
 				if(INPUT_00 == 0)
 				{
 					step = 2; 
+					delay_ms(1000);
 					OUTPUT_22 = 0;//最后一个门 
-					play_mp3(0,2);		
+					delay_ms(100);
+					
+					play_mp3(0,2);
+					delay_ms(5000);
 				} 
 			} 
 		} 
